@@ -2109,7 +2109,7 @@
             }
 
             currentUser.points -= 500;
-            currentUser.enteredDraw = true;
+            currentUser.enteredDraw = false; // اسے ہمیشہ 'جھوٹا' رکھیں تاکہ وہ دوبارہ اندراج کر سکے
             currentUser.drawTicket = 'LD-' + Math.floor(100000 + Math.random() * 900000);
 
             saveCurrentUserData();
