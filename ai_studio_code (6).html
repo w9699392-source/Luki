@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ماہانہ کمائی، ٹاسکس و لکی ڈرا | Monthly Earning Platform</title>
+    <!-- Google Fonts for Urdu & Clean Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #05070c;
+            --card-bg: #0f172a;
+            --card-border: #1e293b;
+            --card-hover: #1e293b;
+            --neon-green: #22c55e;
+            --neon-green-glow: rgba(34, 197, 94, 0.4);
+            --neon-green-hover: #16a34a;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --accent-blue: #3b82f6;
+            --header-height: 60px;
+            --bottom-nav-height: 65px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-bottom: var(--bottom-nav-height);
+            user-select: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e33;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-green);
+        }
+
+        /* Utility Classes */
+        .text-neon {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+        .bg-neon {
+            background-color: var(--neon-green);
+            color: #000;
+        }
+        .btn-neon {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #000000;
+            font-weight: 800;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--neon-green-glow);
+            font-size: 0.95rem;
+        }
+        .btn-neon:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(34, 197, 94, 0.6);
+        }
+        .btn-neon:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        .btn-neon:disabled {
+            background: #334155 !important;
+            color: #94a3b8 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            opacity: 0.7;
+        }
+
+        .btn-secondary {
+            background: #1e293b;
+            color: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-secondary:hover {
+            background: #334155;
+            border-color: #475569;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Top Bar Header */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--header-height);
+            background: rgba(8, 12, 20, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            letter-spacing: -0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Sidebar Drawer */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -290px;
+            width: 290px;
+            height: 100%;
+            background: #090e1a;
+            z-index: 999;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--card-border);
+            box-shadow: -10px 0 35px rgba(0,0,0,0.9);
+        }
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            background: linear-gradient(180deg, #131d31 0%, #090e1a 100%);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-profile-summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-green), #059669);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            box-shadow: 0 0 12px var(--neon-green-glow);
+        }
+
+        .user-info h4 {
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 800;
+        }
+        .user-info p {
+            font-size: 0.78rem;
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        .sidebar-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(34, 197, 94, 0.12);
+            color: var(--neon-green);
+            border-right: 3px solid var(--neon-green);
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: var(--card-border);
+            margin: 8px 10px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--bottom-nav-height);
+            background: rgba(9, 14, 26, 0.96);
+            backdrop-filter: blur(18px);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 90;
+            padding: 0 2px;
+        }
+
+        .nav-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        .nav-tab .tab-icon {
+            font-size: 1.25rem;
+            margin-bottom: 2px;
+            transition: transform 0.2s;
+        }
+
+        .nav-tab.active {
+            color: var(--neon-green);
+        }
+
+        .nav-tab.active .tab-icon {
+            transform: translateY(-2px) scale(1.12);
+        }
+
+        /* App Container & Screens */
+        .main-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .page-screen {
+            display: none;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+        .page-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Auth Screen */
+        .auth-container {
+            max-width: 420px;
+            margin: 30px auto;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .auth-logo {
+            font-size: 3rem;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: #05070c;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 20px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .auth-tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .auth-tab-btn.active {
+            background: var(--neon-green);
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            background: #05070c;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-weight: 600;
+        }
+
+        .form-control:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+        }
+
+        /* Home Stats Cards */
+        .hero-banner {
+            background: linear-gradient(135deg, #131d31 0%, #0a0f1d 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Daily Checkin Banner */
+        .daily-bonus-box {
+            background: linear-gradient(135deg, #0d2618 0%, #0a1120 100%);
+            border: 1px dashed var(--neon-green);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        /* Ad Placeholder */
+        .ad-placeholder {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed #334155;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 16px 0;
+            font-weight: 600;
+        }
+
+        /* Tasks Grid & Items */
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .task-card:hover {
+            border-color: #334155;
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .task-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #1e293b;
+            color: var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .task-details h4 {
+            font-size: 0.92rem;
+            color: #fff;
+            margin-bottom: 2px;
+            font-weight: 800;
+        }
+
+        .task-details p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .task-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .reward-tag {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--neon-green);
+            background: rgba(34, 197, 94, 0.12);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+
+        .timer-badge {
+            font-size: 0.72rem;
+            color: var(--warning-color);
+            background: rgba(245, 158, 11, 0.12);
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: monospace;
+            font-weight: 700;
+        }
+
+        .lock-badge {
+            font-size: 0.72rem;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.12);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            padding-bottom: 6px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: #131d31;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day.unlocked {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .calendar-day.today {
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+
+        .calendar-day .status-icon {
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        /* Lucky Draw Screen */
+        .ticket-box {
+            background: linear-gradient(135deg, #0f2d1b, #131d31);
+            border: 2px dashed var(--neon-green);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .ticket-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+            margin: 8px 0;
+            font-family: monospace;
+        }
+
+        .winners-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .winner-item {
+            background: #0a0f1d;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Leaderboard Table */
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            margin: 20px 0;
+            padding-bottom: 10px;
+        }
+
+        .podium-place {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            width: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .podium-place.first {
+            height: 140px;
+            border-color: #eab308;
+            background: linear-gradient(180deg, rgba(234, 179, 8, 0.18) 0%, var(--card-bg) 100%);
+        }
+
+        .podium-place.second {
+            height: 120px;
+            border-color: #94a3b8;
+        }
+
+        .podium-place.third {
+            height: 105px;
+            border-color: #b45309;
+        }
+
+        .crown-icon {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .leader-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .leader-item.current-user {
+            border-color: var(--neon-green);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        /* Modal Popups */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            padding: 22px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.9);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #1e293b;
+            border: none;
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 380px;
+        }
+
+        .toast {
+            background: #131d31;
+            color: #fff;
+            border: 1px solid var(--neon-green);
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 380px) {
+            .app-title { font-size: 1rem; }
+            .nav-tab { font-size: 0.6rem; }
+            .nav-tab .tab-icon { font-size: 1.1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- App Header -->
+    <header class="app-header" id="appHeader" style="display: none;">
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggleBtn" onclick="toggleSidebar()">☰</button>
+            <div class="app-title">💰 کمائی پلیٹ فارم</div>
+        </div>
+        <div class="header-right">
+            <span id="headerPointsBadge" class="reward-tag">0 پوائنٹس</span>
+            <button class="logout-btn" onclick="logoutUser()">لاگ آؤٹ 🚪</button>
+        </div>
+    </header>
+
+    <!-- Sidebar Drawer -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="user-profile-summary">
+                <div class="avatar" id="sideAvatar">ع</div>
+                <div class="user-info">
+                    <h4 id="sideUserName">صارف</h4>
+                    <p id="sideUserPoints">0 پوائنٹس</p>
+                </div>
+            </div>
+            <button class="sidebar-close" onclick="toggleSidebar()">✖</button>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" onclick="navigateTo('home')">🏠 ہوم پيج</div>
+            <div class="menu-item" onclick="navigateTo('tasks')">📋 روزانہ ٹاسکس (15)</div>
+            <div class="menu-item" onclick="navigateTo('calendar')">📅 ماہانہ کیلنڈر</div>
+            <div class="menu-item" onclick="navigateTo('draw')">🎁 بمپر لکی ڈرا</div>
+            <div class="menu-item" onclick="navigateTo('leaderboard')">🏆 لیڈر بورڈ</div>
+            <div class="menu-item" onclick="navigateTo('profile')">👤 میری پروفائل</div>
+            <div class="menu-item" onclick="navigateTo('more')">🔗 ریفرل و مزید</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item" onclick="navigateTo('about')">ℹ️ ہمارے بارے میں</div>
+            <div class="menu-item" onclick="navigateTo('howItWorks')">❓ کام کیسے کرتا ہے؟</div>
+            <div class="menu-item" onclick="navigateTo('contact')">📞 رابطہ کریں (ایڈمن)</div>
+            <div class="menu-item" onclick="navigateTo('privacy')">🔒 پرائیویسی پالیسی</div>
+        </div>
+    </aside>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- AUTH SCREEN (LOGIN & REGISTER) -->
+        <section id="authScreen" class="page-screen active">
+            <div class="auth-container">
+                <div class="auth-logo">🎁💰</div>
+                <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 4px;">ماہانہ کمائی و لکی ڈرا</h2>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">لاگ ان کریں اور روزانہ پوائنٹس حاصل کریں</p>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">لاگ ان (Login)</button>
+                    <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthTab('register')">رجسٹریشن (Register)</button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>ای میل ایڈریس (Email)</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="example@mail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>پاس ورڈ (Password)</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-neon" style="width: 100%; margin-top: 10px;">لاگ ان کریں 🚀</button>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+                    <div class="form-group">
+                        <label>مکمل نام (Full Name)</label>
+                        <input type="text" id="regName" class="form-control" placeholder="مثال: علی احمد" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ای میل ایڈریس (Email)</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="example@mail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>پاس ورڈ (Password)</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-neon" style="width: 100%; margin-top: 10px;">رجسٹر کریں ✨</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 1. HOME PAGE -->
+        <section id="homePage" class="page-screen">
+            <div class="hero-banner">
+                <h2 style="font-size: 1.3rem; margin-bottom: 6px;">خوش آمدید، <span id="homeUserName" class="text-neon">صارف</span>! 👋</h2>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                    آج کے 15 ٹاسکس مکمل کریں، کل 500 پوائنٹس جیتیں اور 50,000 PKR کے بمپر لکی ڈرا میں شامل ہوں۔
+                </p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div>
+                        <div class="stat-value text-neon" id="homePoints">0</div>
+                        <div class="stat-label">کل پوائنٹس</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💵</div>
+                    <div>
+                        <div class="stat-value" id="homeBalance">Rs. 0</div>
+                        <div class="stat-label">موجودہ بیلنس</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <div class="stat-value" id="homeTasksDone">0 / 15</div>
+                        <div class="stat-label">آج کے ٹاسکس</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div>
+                        <div class="stat-value" id="homeReferrals">0 / 5</div>
+                        <div class="stat-label">ریفرلز</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Check-in Bonus -->
+            <div class="daily-bonus-box">
+                <div>
+                    <h3 style="font-size: 1rem; color: #fff;">🎁 روزانہ بونس (Daily Check-in)</h3>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">ہر 24 گھنٹے بعد +5 مفت پوائنٹس حاصل کریں</p>
+                </div>
+                <button id="dailyBonusBtn" class="btn-neon" onclick="claimDailyBonus()">بونس لیں (+5)</button>
+            </div>
+
+            <!-- Grand Prize Banner -->
+            <div class="card" style="border-color: rgba(34, 197, 94, 0.4);">
+                <div class="card-header">
+                    <div class="card-title">🏆 اس ماہ کا بمپر گرینڈ پرائز</div>
+                    <span class="reward-tag">50,000 PKR</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+                    500 پوائنٹس حاصل کر کے لکی ڈرا کا مفت ٹکٹ حاصل کریں۔ قرعہ اندازی ہر ماہ کی پہلی تاریخ کو ہوتی ہے!
+                </p>
+                <div style="margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 4px; color: var(--text-muted);">
+                        <span>پروگریس</span>
+                        <span id="drawProgressText">0 / 500 پوائنٹس</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden;">
+                        <div id="drawProgressBar" style="width: 0%; height: 100%; background: var(--neon-green); transition: width 0.3s;"></div>
+                    </div>
+                </div>
+                <button class="btn-neon" style="width: 100%; font-size: 0.9rem;" onclick="navigateTo('draw')">لکی ڈرا کی تفصیلات دیکھیں 🎁</button>
+            </div>
+
+            <!-- Empty Ad Space Placeholder -->
+            <div class="ad-placeholder">
+                📢 [اشتہار کی جگہ - Ad Space Placeholder]
+            </div>
+        </section>
+
+        <!-- 2. TASKS PAGE -->
+        <section id="tasksPage" class="page-screen">
+            <div class="tasks-header">
+                <div>
+                    <h2 style="font-size: 1.25rem;">📋 روزانہ کے 15 ٹاسکس</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">ٹاسکس مکمل کر کے کل 500 پوائنٹس حاصل کریں</p>
+                </div>
+                <span class="reward-tag" id="tasksProgressBadge">0 / 15 مکمل</span>
+            </div>
+
+            <!-- Calendar Day Specific Unlock Notice Banner -->
+            <div id="calendarUnlockNotice" class="card" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.4);">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <div>
+                        <h4 style="color: var(--warning-color); font-size: 0.9rem;">🗓️ آج کا کیلنڈر دن غیر مقفل کریں</h4>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary);">پہلا ٹاسک شروع کرنے پر آج کی تاریخ کیلنڈر میں انلاک ہو جائے گی۔</p>
+                    </div>
+                    <button class="btn-neon" style="padding: 6px 12px; font-size: 0.8rem;" onclick="unlockTodayCalendarManual()">آج انلاک کریں</button>
+                </div>
+            </div>
+
+            <!-- 15 Tasks List Container -->
+            <div id="tasksList">
+                <!-- Dynamically rendered tasks -->
+            </div>
+        </section>
+
+        <!-- 3. CALENDAR PAGE -->
+        <section id="calendarPage" class="page-screen">
+            <div class="card-header" style="border: none; padding-bottom: 0;">
+                <div>
+                    <h2 style="font-size: 1.25rem;">📅 ماہانہ حاضری کیلنڈر</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);" id="calendarMonthTitle">اگست 2026 - 31 ایام</p>
+                </div>
+                <span class="reward-tag" id="calendarSummaryTag">0 / 31 انلاکڈ</span>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin: 10px 0 16px;">
+                💡 نوٹ: جس دن آپ کم از کم 1 ٹاسک مکمل کرتے ہیں، وہ دن سبز ٹک (✔) کے ساتھ انلاک ہو جاتا ہے۔
+            </p>
+
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Days grid populated by JS -->
+            </div>
+        </section>
+
+        <!-- 4. LUCKY DRAW & WITHDRAW PAGE -->
+        <section id="drawPage" class="page-screen">
+            <h2 style="font-size: 1.25rem; margin-bottom: 4px;">🎁 بمپر لکی ڈرا و کیش آؤٹ</h2>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">500 پوائنٹس مکمل کر کے ماہانہ 50,000 PKR کے ڈرا میں اینٹری لیں</p>
+
+            <div class="ticket-box">
+                <h3 style="font-size: 1.1rem; color: #fff;">آپ کی اینٹری اسٹیٹس</h3>
+                <div id="ticketStatusContent">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">آپ نے ابھی تک اس ماہ کے ڈرا میں اینٹری نہیں لی۔</p>
+                    <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" onclick="enterLuckyDraw()">اینٹری لیں (500 پوائنٹس)</button>
+                </div>
+            </div>
+
+            <!-- Cash Withdrawal Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💸 رقم کا نکالنا (Withdraw Balance)</div>
+                    <span class="reward-tag" id="withdrawBalanceTag">Rs. 0</span>
+                </div>
+                <form onsubmit="handleWithdraw(event)">
+                    <div class="form-group">
+                        <label>پیمنٹ میتھڈ چنیں</label>
+                        <select id="withdrawMethod" class="form-control" style="background: #05070c;">
+                            <option value="EasyPaisa">EasyPaisa (ایزی پیسہ)</option>
+                            <option value="JazzCash">JazzCash (جاز کیش)</option>
+                            <option value="Bank Transfer">Bank Transfer (بینک ٹرانسفر)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>اکاؤنٹ نمبر / موبائل نمبر</label>
+                        <input type="text" id="withdrawAccount" class="form-control" placeholder="03001234567" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم (روپوں میں - کم از کم Rs. 500)</label>
+                        <input type="number" id="withdrawAmount" class="form-control" placeholder="500" min="500" required>
+                    </div>
+                    <button type="submit" class="btn-neon" style="width: 100%;">رقم کی درخواست بھیجیں 📩</button>
+                </form>
+            </div>
+
+            <!-- Past Winners Section -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎉 گزشتہ ماہ کے لکی ڈرا فاتحین</div>
+                </div>
+                <div class="winners-list">
+                    <div class="winner-item">
+                        <div>
+                            <strong style="color: var(--neon-green);">🥇 محمد بلال (لاہور)</strong>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-92810</div>
+                        </div>
+                        <span style="font-weight: 700; color: #fff;">50,000 PKR</span>
+                    </div>
+                    <div class="winner-item">
+                        <div>
+                            <strong style="color: #94a3b8;">🥈 عائشہ خان (کراچی)</strong>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-44102</div>
+                        </div>
+                        <span style="font-weight: 700; color: #fff;">25,000 PKR</span>
+                    </div>
+                    <div class="winner-item">
+                        <div>
+                            <strong style="color: #b45309;">🥉 عثمان طارق (پشاور)</strong>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-10583</div>
+                        </div>
+                        <span style="font-weight: 700; color: #fff;">10,000 PKR</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. LEADERBOARD PAGE -->
+        <section id="leaderboardPage" class="page-screen">
+            <h2 style="font-size: 1.25rem; margin-bottom: 4px;">🏆 ٹاپ ارنرز لیڈر بورڈ</h2>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">اس ماہ سب سے زیادہ پوائنٹس اور کمانے والے صارفین</p>
+
+            <!-- Top 3 Podium -->
+            <div class="podium">
+                <div class="podium-place second">
+                    <div class="crown-icon">🥈</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #fff;">سعد علی</div>
+                    <div style="font-size: 0.72rem; color: var(--neon-green); font-weight: 700;">480 Pts</div>
+                </div>
+                <div class="podium-place first">
+                    <div class="crown-icon">👑</div>
+                    <div style="font-size: 0.85rem; font-weight: 900; color: #eab308;">حمزہ شیخ</div>
+                    <div style="font-size: 0.75rem; color: var(--neon-green); font-weight: 800;">500 Pts</div>
+                </div>
+                <div class="podium-place third">
+                    <div class="crown-icon">🥉</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #fff;">مریم فاطمہ</div>
+                    <div style="font-size: 0.72rem; color: var(--neon-green); font-weight: 700;">450 Pts</div>
+                </div>
+            </div>
+
+            <!-- Leaderboard List -->
+            <div id="leaderboardList">
+                <!-- Dynamically filled with top users -->
+            </div>
+        </section>
+
+        <!-- 6. PROFILE PAGE -->
+        <section id="profilePage" class="page-screen">
+            <div class="card" style="text-align: center; padding: 24px;">
+                <div class="avatar" style="width: 70px; height: 70px; font-size: 2rem; margin: 0 auto 12px;" id="profileAvatar">ع</div>
+                <h3 id="profileName" style="font-size: 1.2rem; color: #fff;">صارف</h3>
+                <p id="profileEmail" style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">user@example.com</p>
+
+                <div class="stats-grid" style="margin-bottom: 0;">
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-value text-neon" id="profPoints">0</div>
+                            <div class="stat-label">کل پوائنٹس</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-value" id="profBalance">Rs. 0</div>
+                            <div class="stat-label">کمايا گیا بیلنس</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⚙️ پروفائل سیٹنگز</div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn-secondary" style="text-align: right;" onclick="editProfileName()">✏️ نام تبدیل کریں</button>
+                    <button class="btn-secondary" style="text-align: right;" onclick="resetAccountProgress()">🔄 ٹاسکس ڈیمو ری سیٹ کریں</button>
+                    <button class="btn-secondary" style="text-align: right; color: #f87171; border-color: rgba(239,68,68,0.3);" onclick="logoutUser()">🚪 لاگ آؤٹ کریں</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. MORE & REFERRAL PAGE -->
+        <section id="morePage" class="page-screen">
+            <h2 style="font-size: 1.25rem; margin-bottom: 12px;">🔗 ریفرل پروگرام و لنکس</h2>
+
+            <!-- Referral Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">👥 دوستوں کو دعوت دیں (Referral)</div>
+                    <span class="reward-tag" id="refCountBadge">0 / 5 ریفرلز</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                    اپنے ریفرل لنک سے دوستوں کو جوائن کروائیں۔ ہر ریفرل پر 50 اضافی پوائنٹس حاصل کریں! (زیادہ سے زیادہ 5 ریفرلز)
+                </p>
+
+                <div class="form-group">
+                    <label>آپ کا ریفرل لنک</label>
+                    <input type="text" id="referralLinkInput" class="form-control" readonly style="color: var(--neon-green); font-weight: 700;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;" id="refShareButtonsArea">
+                    <button id="refCopyBtn" class="btn-secondary" onclick="copyReferralLink()">📋 لنک کاپی کریں</button>
+                    <button id="refWhatsappBtn" class="btn-neon" style="background: #25D366; color: #fff;" onclick="shareOnWhatsApp()">💬 واٹس ایپ شیئر</button>
+                </div>
+
+                <div id="refLimitMessage" style="display: none; padding: 12px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; text-align: center; color: #f87171; font-weight: 800; font-size: 0.9rem;">
+                    🛑 حد ختم ہو چکی ہے (Limit Reached)
+                </div>
+
+                <!-- Test button to simulate referral -->
+                <button id="refSimulateBtn" class="btn-secondary" style="width: 100%; margin-top: 10px; font-size: 0.82rem;" onclick="simulateAddReferral()">
+                    ➕ ٹیسٹ ریفرل شامل کریں (Simulate Demo Referral)
+                </button>
+            </div>
+
+            <!-- Links to Extra Subpages -->
+            <div class="card">
+                <div class="card-header"><div class="card-title">📄 پلیٹ فارم معلومات</div></div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="btn-secondary" style="text-align: right;" onclick="navigateTo('about')">ℹ️ ہمارے بارے میں (About Us)</button>
+                    <button class="btn-secondary" style="text-align: right;" onclick="navigateTo('howItWorks')">❓ کام کیسے کرتا ہے؟ (How It Works)</button>
+                    <button class="btn-secondary" style="text-align: right;" onclick="navigateTo('contact')">📞 رابطہ کریں (Contact Us)</button>
+                    <button class="btn-secondary" style="text-align: right;" onclick="navigateTo('privacy')">🔒 پرائیویسی پالیسی (Privacy Policy)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXTRA PAGE: ABOUT US -->
+        <section id="aboutPage" class="page-screen">
+            <button class="btn-secondary" style="margin-bottom: 12px;" onclick="navigateTo('more')">⬅️ واپس جائیں</button>
+            <div class="card">
+                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: var(--neon-green);">ℹ️ ہمارے بارے میں (About Us)</h2>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px;">
+                    ماہانہ کمائی و لکی ڈرا پلیٹ فارم پاکستان کا ایک بہترین اور قابل اعتماد آن لائن ارننگ پلیٹ فارم ہے جہاں صارف بغیر کسی سرمایہ کاری کے صرف روزانہ کی بنیاد پر 15 آسان ٹاسکس اور منی گیمز کھیل کر پوائنٹس کما سکتے ہیں۔
+                </p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">
+                    ہمارا مقصد ہر فرد کو اپنے موبائل فون کے ذریعے روزانہ کی بنیاد پر باوقار طریقے سے اضافی مالی آمدنی اور لکی ڈرا کے ذریعے بمپر انعام جیتنے کے مواقع فراہم کرنا ہے۔
+                </p>
+            </div>
+        </section>
+
+        <!-- EXTRA PAGE: HOW IT WORKS -->
+        <section id="howItWorksPage" class="page-screen">
+            <button class="btn-secondary" style="margin-bottom: 12px;" onclick="navigateTo('more')">⬅️ واپس جائیں</button>
+            <div class="card">
+                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: var(--neon-green);">❓ کام کیسے کرتا ہے؟ (How It Works)</h2>
+                <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+                    <div>
+                        <strong style="color: #fff;">1️⃣ اکاؤنٹ بنائیں:</strong><br>
+                        اپنا نام، ای میل اور پاس ورڈ درج کر کے مفت رجسٹریشن مکمل کریں۔
+                    </div>
+                    <div>
+                        <strong style="color: #fff;">2️⃣ روزانہ کے 15 ٹاسکس کھیلیں:</strong><br>
+                        روزانہ 15 مختلف گیمز اور کوئز کھیلیں اور کل 500 پوائنٹس تک حاصل کریں۔
+                    </div>
+                    <div>
+                        <strong style="color: #fff;">3️⃣ کیلنڈر انلاک کریں:</strong><br>
+                        ہر روز کم از کم 1 ٹاسک مکمل کرنے پر آپ کا اس دن کا حاضری کیلنڈر انلاک ہو جاتا ہے۔
+                    </div>
+                    <div>
+                        <strong style="color: #fff;">4️⃣ 500 پوائنٹس پر لکی ڈرا:</strong><br>
+                        500 پوائنٹس مکمل ہونے پر آپ 50,000 PKR کے گرینڈ ڈرا کے لیے اینٹری لے سکتے ہیں۔
+                    </div>
+                    <div>
+                        <strong style="color: #fff;">5️⃣ رقم کا انکیشمنٹ:</strong><br>
+                        اپنے حاصل کردہ پوائنٹس کو ایزی پیسہ یا جاز کیش کے ذریعے آسانی سے نقد رقم میں منتقل کریں۔
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXTRA PAGE: CONTACT US -->
+        <section id="contactPage" class="page-screen">
+            <button class="btn-secondary" style="margin-bottom: 12px;" onclick="navigateTo('more')">⬅️ واپس جائیں</button>
+            <div class="card">
+                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: var(--neon-green);">📞 رابطہ کریں (Contact Admin)</h2>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                    اگر آپ کو کوئی سوال یا درپیش مسئلہ ہے تو ہمارے ہیلپ ڈیسک یا ایڈمن سے رابطہ کریں۔
+                </p>
+
+                <div style="margin-bottom: 20px;">
+                    <a href="https://wa.me/923001234567?text=السلام علیکم! مجھے ایڈمن سے سپورٹ چاہیے" target="_blank" class="btn-neon" style="background: #25D366; color: #fff; width: 100%; text-decoration: none;">
+                        💬 ایڈمن سے واٹس ایپ پر رابطہ کریں (WhatsApp Admin)
+                    </a>
+                </div>
+
+                <form onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label>عنوان (Subject)</label>
+                        <input type="text" class="form-control" placeholder="سوال کا عنوان" required>
+                    </div>
+                    <div class="form-group">
+                        <label>پیغام (Message)</label>
+                        <textarea class="form-control" rows="4" placeholder="اپنا پیغام یہاں تحریر کریں..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-neon" style="width: 100%;">پیغام بھیجیں 📩</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- EXTRA PAGE: PRIVACY POLICY -->
+        <section id="privacyPage" class="page-screen">
+            <button class="btn-secondary" style="margin-bottom: 12px;" onclick="navigateTo('more')">⬅️ واپس جائیں</button>
+            <div class="card">
+                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: var(--neon-green);">🔒 پرائیویسی پالیسی (Privacy Policy)</h2>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px;">
+                    ہم آپ کی پرائیویسی اور ذاتی معلومات کا احترام کرتے ہیں۔ تمام معلومات آپ کی مقامی برائوزر ڈیوائس میں محفوظ کی جاتی ہیں اور کسی بھی غیر متعلقہ ادارے کو فروخت نہیں کی جاتیں۔
+                </p>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
+                    آپ کے تمام پوائنٹس، ٹاسک ہسٹری اور ڈرا اینٹریز محفوظ رکھی جاتی ہیں۔ پلیٹ فارم کو استعمال کر کے آپ ہماری سروس کی شرائط سے اتفاق کرتے ہیں۔
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav" id="bottomNav" style="display: none;">
+        <button class="nav-tab active" id="navTab_home" onclick="navigateTo('home')">
+            <span class="tab-icon">🏠</span>
+            <span>ہوم</span>
+        </button>
+        <button class="nav-tab" id="navTab_tasks" onclick="navigateTo('tasks')">
+            <span class="tab-icon">📋</span>
+            <span>ٹاسکس</span>
+        </button>
+        <button class="nav-tab" id="navTab_calendar" onclick="navigateTo('calendar')">
+            <span class="tab-icon">📅</span>
+            <span>کیلنڈر</span>
+        </button>
+        <button class="nav-tab" id="navTab_draw" onclick="navigateTo('draw')">
+            <span class="tab-icon">🎁</span>
+            <span>لکی ڈرا</span>
+        </button>
+        <button class="nav-tab" id="navTab_leaderboard" onclick="navigateTo('leaderboard')">
+            <span class="tab-icon">🏆</span>
+            <span>لیڈر بورڈ</span>
+        </button>
+        <button class="nav-tab" id="navTab_profile" onclick="navigateTo('profile')">
+            <span class="tab-icon">👤</span>
+            <span>پروفائل</span>
+        </button>
+        <button class="nav-tab" id="navTab_more" onclick="navigateTo('more')">
+            <span class="tab-icon">➕</span>
+            <span>مزید</span>
+        </button>
+    </nav>
+
+    <!-- TASK GAME PLAY MODAL POPUP -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()">✖</button>
+            <div id="modalGameContent">
+                <!-- Mini Game logic injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA & STATE MANAGEMENT ---
+        const TASKS_DATA = [
+            { id: 1, title: "ریاضی کا چیلنج (Math Challenge)", reward: 10, icon: "🔢", desc: "آسان ریاضی سوال کا جواب دیں" },
+            { id: 2, title: "الفاظ کی ترتیب (Word Unscramble)", reward: 10, icon: "🔤", desc: "بے ترتیب حروف کو درست لفظ میں بدلیں" },
+            { id: 3, title: "فاسٹ کلکر (Speed Clicker)", reward: 15, icon: "⚡", desc: "5 سیکنڈ میں 5 بار کلک کریں" },
+            { id: 4, title: "رنگ ملائیں (Color Match)", reward: 15, icon: "🎨", desc: "درست رنگ والے باکس کا انتخاب کریں" },
+            { id: 5, title: "کوئیک سروے 1 (Quick Survey)", reward: 20, icon: "📝", desc: "ایپ کا تجربہ اور رائے دیں" },
+            { id: 6, title: "ایموجی پزل (Emoji Puzzle)", reward: 20, icon: "🧐", desc: "مختلف ایموجی کو تلاش کریں" },
+            { id: 7, title: "میموری کارڈر (Memory Flip)", reward: 25, icon: "🃏", desc: "ایک جیسے دو کارڈز تلاش کریں" },
+            { id: 8, title: "سچ یا جھوٹ (True or False)", reward: 25, icon: "❓", desc: "معلومات عامہ کے سوال کا جواب دیں" },
+            { id: 9, title: "اسکریچ کارڈ (Scratch Card)", reward: 30, icon: "🪙", desc: "کارڈ کو اسکریچ کریں اور انعام دیکھیں" },
+            { id: 10, title: "لکی اسپن (Lucky Spin Wheel)", reward: 30, icon: "🎡", desc: "پہیہ گھمائیں اور پوائنٹس حاصل کریں" },
+            { id: 11, title: "نمبر بتائیں (Guess Number)", reward: 40, icon: "🎯", desc: "1 سے 5 کے درمیان چھپا نمبر تلاش کریں" },
+            { id: 12, title: "ستارہ پکڑیں (Catch Star)", reward: 40, icon: "⭐", desc: "حرکت کرتے ستارے پر کلک کریں" },
+            { id: 13, title: "رائے شماری (App Rating Survey)", reward: 50, icon: "⭐", desc: "پلیٹ فارم کو اسٹار ریٹنگ دیں" },
+            { id: 14, title: "پیٹرن ڈرا (Pattern Lock)", reward: 60, icon: "🔒", desc: "درست پیٹرن پر ٹیپ کریں" },
+            { id: 15, title: "گرینڈ کوئز (Grand Master Quiz)", reward: 110, icon: "👑", desc: "3 سوالات کے درست جوابات دیں" }
+        ];
+
+        let currentUser = null;
+        let activePage = 'home';
+        let timerInterval = null;
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users') || '[]');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function loadCurrentSession() {
+            const email = localStorage.getItem('currentUserEmail');
+            if (!email) return null;
+            const users = getUsers();
+            return users.find(u => u.email.toLowerCase() === email.toLowerCase()) || null;
+        }
+
+        function saveCurrentUserData() {
+            if (!currentUser) return;
+            const users = getUsers();
+            const index = users.findIndex(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
+            if (index !== -1) {
+                users[index] = currentUser;
+                saveUsers(users);
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- AUTH SYSTEM LOGIC ---
+        function switchAuthTab(tab) {
+            document.getElementById('tabLoginBtn').classList.toggle('active', tab === 'login');
+            document.getElementById('tabRegisterBtn').classList.toggle('active', tab === 'register');
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !email || !password) {
+                showToast('براہ کرم تمام خانے پر کریں', 'error');
+                return;
+            }
+
+            const users = getUsers();
+            if (users.some(u => u.email.toLowerCase() === email)) {
+                showToast('یہ ای میل پہلے سے رجسٹرڈ ہے!', 'error');
+                return;
+            }
+
+            const newUser = {
+                name,
+                email,
+                password,
+                points: 0,
+                balance: 0,
+                referrals: 0,
+                tasksCompleted: 0,
+                lastBonus: 0,
+                enteredDraw: false,
+                drawTicket: null,
+                dailyLog: {},
+                taskTimestamps: {},
+                createdDate: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            saveUsers(users);
+            showToast('رجسٹریشن مکمل ہو گئی۔ اب لاگ ان کریں!');
+            switchAuthTab('login');
+            document.getElementById('loginEmail').value = email;
+            document.getElementById('registerForm').reset();
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value;
+
+            const users = getUsers();
+            const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
+
+            if (!user) {
+                showToast('غلط ای میل یا پاس ورڈ!', 'error');
+                return;
+            }
+
+            if (!user.dailyLog) user.dailyLog = {};
+            if (!user.taskTimestamps) user.taskTimestamps = {};
+            if (user.points === undefined) user.points = 0;
+            if (user.balance === undefined) user.balance = 0;
+            if (user.referrals === undefined) user.referrals = 0;
+
+            currentUser = user;
+            localStorage.setItem('currentUserEmail', currentUser.email);
+            saveCurrentUserData();
+
+            showToast(`خوش آمدید، ${currentUser.name}!`);
+            initAppUI();
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('currentUserEmail');
+            currentUser = null;
+            document.getElementById('appHeader').style.display = 'none';
+            document.getElementById('bottomNav').style.display = 'none';
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+            
+            document.querySelectorAll('.page-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('authScreen').classList.add('active');
+            showToast('آپ لاگ آؤٹ ہو چکے ہیں');
+        }
+
+        // --- NAVIGATION & UI INIT ---
+        function initAppUI() {
+            currentUser = loadCurrentSession();
+            if (!currentUser) {
+                document.getElementById('authScreen').classList.add('active');
+                return;
+            }
+
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('appHeader').style.display = 'flex';
+            document.getElementById('bottomNav').style.display = 'flex';
+
+            updateUserDisplays();
+            navigateTo('home');
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (activePage === 'tasks') renderTasks();
+                if (activePage === 'home') updateDailyBonusBtn();
+            }, 1000);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function navigateTo(pageId) {
+            activePage = pageId;
+
+            document.querySelectorAll('.page-screen').forEach(s => s.classList.remove('active'));
+            const targetScreen = document.getElementById(pageId + 'Page');
+            if (targetScreen) targetScreen.classList.add('active');
+
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            const navBtn = document.getElementById('navTab_' + pageId);
+            if (navBtn) navBtn.classList.add('active');
+
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+
+            updateUserDisplays();
+            if (pageId === 'home') renderHomePage();
+            if (pageId === 'tasks') renderTasks();
+            if (pageId === 'calendar') renderCalendar();
+            if (pageId === 'draw') renderLuckyDrawPage();
+            if (pageId === 'leaderboard') renderLeaderboard();
+            if (pageId === 'profile') renderProfilePage();
+            if (pageId === 'more') renderMorePage();
+        }
+
+        function updateUserDisplays() {
+            if (!currentUser) return;
+
+            const currentPoints = currentUser.points || 0;
+            const currentBalance = currentUser.balance || currentPoints;
+
+            document.getElementById('headerPointsBadge').innerText = `${currentPoints} پوائنٹس`;
+            document.getElementById('sideUserName').innerText = currentUser.name;
+            document.getElementById('sideAvatar').innerText = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('sideUserPoints').innerText = `${currentPoints} پوائنٹس`;
+
+            document.getElementById('homeUserName').innerText = currentUser.name;
+            document.getElementById('homePoints').innerText = currentPoints;
+            document.getElementById('homeBalance').innerText = `Rs. ${currentBalance}`;
+
+            const now = Date.now();
+            const todayTasksDone = Object.keys(currentUser.taskTimestamps || {}).filter(k => {
+                const ts = currentUser.taskTimestamps[k];
+                return isSameDay(ts, now);
+            }).length;
+
+            document.getElementById('homeTasksDone').innerText = `${todayTasksDone} / 15`;
+            document.getElementById('homeReferrals').innerText = `${currentUser.referrals || 0} / 5`;
+
+            const drawProg = Math.min(100, Math.floor((currentPoints / 500) * 100));
+            document.getElementById('drawProgressBar').style.width = `${drawProg}%`;
+            document.getElementById('drawProgressText').innerText = `${currentPoints} / 500 پوائنٹس`;
+        }
+
+        function getTodayKey() {
+            const now = new Date();
+            return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        }
+
+        function isSameDay(ts1, ts2) {
+            const d1 = new Date(ts1);
+            const d2 = new Date(ts2);
+            return d1.getFullYear() === d2.getFullYear() &&
+                   d1.getMonth() === d2.getMonth() &&
+                   d1.getDate() === d2.getDate();
+        }
+
+        // --- HOME PAGE & DAILY BONUS ---
+        function renderHomePage() {
+            updateDailyBonusBtn();
+        }
+
+        function updateDailyBonusBtn() {
+            if (!currentUser) return;
+            const btn = document.getElementById('dailyBonusBtn');
+            const lastBonus = currentUser.lastBonus || 0;
+            const now = Date.now();
+            const elapsed = now - lastBonus;
+            const cooldown = 24 * 60 * 60 * 1000;
+
+            if (elapsed < cooldown) {
+                btn.disabled = true;
+                const remainingSecs = Math.floor((cooldown - elapsed) / 1000);
+                const h = Math.floor(remainingSecs / 3600);
+                const m = Math.floor((remainingSecs % 3600) / 60);
+                const s = remainingSecs % 60;
+                btn.innerText = `اگلا بونس: ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            } else {
+                btn.disabled = false;
+                btn.innerText = 'بونس لیں (+5)';
+            }
+        }
+
+        function claimDailyBonus() {
+            if (!currentUser) return;
+            const lastBonus = currentUser.lastBonus || 0;
+            const now = Date.now();
+            if (now - lastBonus < 24 * 60 * 60 * 1000) return;
+
+            currentUser.points = (currentUser.points || 0) + 5;
+            currentUser.balance = (currentUser.balance || 0) + 5;
+            currentUser.lastBonus = now;
+            saveCurrentUserData();
+
+            showToast('مبارک ہو! آپ کو 5 بونس پوائنٹس موصول ہو گئے۔');
+            updateUserDisplays();
+            updateDailyBonusBtn();
+        }
+
+        // --- TASKS SYSTEM (15 TASKS) ---
+        function renderTasks() {
+            if (!currentUser) return;
+            const tasksListContainer = document.getElementById('tasksList');
+            tasksListContainer.innerHTML = '';
+
+            const todayKey = getTodayKey();
+            const isTodayCalendarUnlocked = currentUser.dailyLog && currentUser.dailyLog[todayKey];
+
+            const noticeBanner = document.getElementById('calendarUnlockNotice');
+            if (noticeBanner) {
+                noticeBanner.style.display = isTodayCalendarUnlocked ? 'none' : 'block';
+            }
+
+            let completedTodayCount = 0;
+            const now = Date.now();
+
+            TASKS_DATA.forEach(task => {
+                const lastCompleted = (currentUser.taskTimestamps && currentUser.taskTimestamps[task.id]) || 0;
+                const elapsed = now - lastCompleted;
+                const is24hLocked = elapsed < 24 * 60 * 60 * 1000;
+
+                if (isSameDay(lastCompleted, now)) {
+                    completedTodayCount++;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'task-card';
+
+                let actionHtml = '';
+
+                if (is24hLocked) {
+                    const remainingSecs = Math.floor((24 * 60 * 60 * 1000 - elapsed) / 1000);
+                    const h = Math.floor(remainingSecs / 3600);
+                    const m = Math.floor((remainingSecs % 3600) / 60);
+                    const s = remainingSecs % 60;
+                    const timerText = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+                    actionHtml = `
+                        <div class="task-action">
+                            <span class="timer-badge">⏳ ${timerText}</span>
+                            <button class="btn-neon" style="padding: 6px 12px; font-size: 0.8rem;" disabled>مکمل ہوا</button>
+                        </div>
+                    `;
+                } else if (!isTodayCalendarUnlocked) {
+                    actionHtml = `
+                        <div class="task-action">
+                            <span class="lock-badge">🔒 آج کا دن مقفل</span>
+                            <button class="btn-neon" style="padding: 6px 12px; font-size: 0.8rem;" onclick="startTaskInteractive(${task.id})">پہلے دن انلاک کریں</button>
+                        </div>
+                    `;
+                } else {
+                    actionHtml = `
+                        <div class="task-action">
+                            <span class="reward-tag">+${task.reward} Pts</span>
+                            <button class="btn-neon" style="padding: 6px 12px; font-size: 0.8rem;" onclick="startTaskInteractive(${task.id})">کھیلیں 🎮</button>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="task-info">
+                        <div class="task-badge">${task.icon}</div>
+                        <div class="task-details">
+                            <h4>${task.title}</h4>
+                            <p>${task.desc}</p>
+                        </div>
+                    </div>
+                    ${actionHtml}
+                `;
+
+                tasksListContainer.appendChild(card);
+            });
+
+            document.getElementById('tasksProgressBadge').innerText = `${completedTodayCount} / 15 مکمل`;
+        }
+
+        function unlockTodayCalendarManual() {
+            if (!currentUser) return;
+            const todayKey = getTodayKey();
+            if (!currentUser.dailyLog) currentUser.dailyLog = {};
+            currentUser.dailyLog[todayKey] = true;
+            saveCurrentUserData();
+            showToast('آج کا تاریخ ڈے کامیابی سے انلاک ہو گیا! ✔');
+            renderTasks();
+            updateUserDisplays();
+        }
+
+        function startTaskInteractive(taskId) {
+            if (!currentUser) return;
+
+            const todayKey = getTodayKey();
+            if (!currentUser.dailyLog) currentUser.dailyLog = {};
+            currentUser.dailyLog[todayKey] = true;
+
+            const task = TASKS_DATA.find(t => t.id === taskId);
+            if (!task) return;
+
+            const modal = document.getElementById('taskModal');
+            const content = document.getElementById('modalGameContent');
+
+            content.innerHTML = renderGameUI(task);
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').classList.remove('active');
+        }
+
+        function completeTaskSuccess(taskId) {
+            const task = TASKS_DATA.find(t => t.id === taskId);
+            if (!task || !currentUser) return;
+
+            if (!currentUser.taskTimestamps) currentUser.taskTimestamps = {};
+            currentUser.taskTimestamps[taskId] = Date.now();
+
+            currentUser.points = (currentUser.points || 0) + task.reward;
+            currentUser.balance = (currentUser.balance || 0) + task.reward;
+            currentUser.tasksCompleted = (currentUser.tasksCompleted || 0) + 1;
+
+            const todayKey = getTodayKey();
+            currentUser.dailyLog[todayKey] = true;
+
+            saveCurrentUserData();
+            closeModal();
+
+            showToast(`مبارک ہو! آپ نے "${task.title}" مکمل کر کے +${task.reward} پوائنٹس جیتے! 🎉`);
+            updateUserDisplays();
+            renderTasks();
+        }
+
+        // --- MINI GAMES INTERACTIVE RENDERERS ---
+        function renderGameUI(task) {
+            switch(task.id) {
+                case 1:
+                    const a = Math.floor(Math.random() * 25) + 10;
+                    const b = Math.floor(Math.random() * 25) + 5;
+                    const correctSum = a + b;
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🔢 ${task.title}</h3>
+                            <p style="font-size: 0.9rem; color: #fff; margin-bottom: 16px;">سوال کا جواب دیں:</p>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 20px;">${a} + ${b} = ?</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <button class="btn-secondary" onclick="checkMathAnswer(${correctSum - 3}, ${correctSum}, ${task.id})">${correctSum - 3}</button>
+                                <button class="btn-secondary" onclick="checkMathAnswer(${correctSum}, ${correctSum}, ${task.id})">${correctSum}</button>
+                                <button class="btn-secondary" onclick="checkMathAnswer(${correctSum + 4}, ${correctSum}, ${task.id})">${correctSum + 4}</button>
+                                <button class="btn-secondary" onclick="checkMathAnswer(${correctSum + 1}, ${correctSum}, ${task.id})">${correctSum + 1}</button>
+                            </div>
+                        </div>
+                    `;
+                case 2:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🔤 ${task.title}</h3>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 12px;">ان حروف کو درست ترتیب میں رکھیں: <strong>S - U - N - O - B</strong></p>
+                            <input type="text" id="unscrambleInput" class="form-control" placeholder="درست لفظ لکھیں (e.g. BONUS)" style="text-align: center; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 16px;">
+                            <button class="btn-neon" style="width: 100%;" onclick="checkWordUnscramble(${task.id})">جواب جمع کریں ✨</button>
+                        </div>
+                    `;
+                case 3:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">⚡ ${task.title}</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">5 بار بٹن پر تیزی سے ٹیپ کریں!</p>
+                            <div id="clickerCounter" style="font-size: 2.5rem; font-weight: 800; color: var(--neon-green); margin-bottom: 16px;">0 / 5</div>
+                            <button id="tapBtn" class="btn-neon" style="width: 100%; padding: 18px; font-size: 1.2rem;" onclick="handleSpeedTap(${task.id})">ٹیپ کریں! 👆</button>
+                        </div>
+                    `;
+                case 4:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🎨 ${task.title}</h3>
+                            <p style="font-size: 0.9rem; color: #fff; margin-bottom: 16px;">ان میں سے <strong>سبز (Green)</strong> رنگ چنیں:</p>
+                            <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                                <div style="width: 60px; height: 60px; background: #ef4444; border-radius: 12px; cursor: pointer;" onclick="showToast('غلط! سرخ رنگ ہے', 'error')"></div>
+                                <div style="width: 60px; height: 60px; background: #22c55e; border-radius: 12px; cursor: pointer; border: 2px solid #fff;" onclick="completeTaskSuccess(${task.id})"></div>
+                                <div style="width: 60px; height: 60px; background: #3b82f6; border-radius: 12px; cursor: pointer;" onclick="showToast('غلط! نیلا رنگ ہے', 'error')"></div>
+                            </div>
+                        </div>
+                    `;
+                case 6:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🧐 ${task.title}</h3>
+                            <p style="font-size: 0.88rem; color: #fff; margin-bottom: 16px;">ان میں سے مختلف ایموجی پر کلک کریں:</p>
+                            <div style="font-size: 2.5rem; display: flex; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                                <span style="cursor: pointer;" onclick="showToast('غلط ایموجی!', 'error')">😃</span>
+                                <span style="cursor: pointer;" onclick="showToast('غلط ایموجی!', 'error')">😃</span>
+                                <span style="cursor: pointer; background: rgba(34, 197, 94, 0.2); border-radius: 50%;" onclick="completeTaskSuccess(${task.id})">😁</span>
+                                <span style="cursor: pointer;" onclick="showToast('غلط ایموجی!', 'error')">😃</span>
+                            </div>
+                        </div>
+                    `;
+                case 9:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🪙 ${task.title}</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">نیچے دیے گئے باکس پر ٹیپ کر کے کارڈ اسکریچ کریں!</p>
+                            <div id="scratchBox" style="background: #334155; border: 2px dashed var(--neon-green); border-radius: 14px; height: 120px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; color: #fff; font-weight: 700; margin-bottom: 16px;" onclick="revealScratch(${task.id})">
+                                👈 اسکریچ کرنے کے لیے یہاں کلک کریں
+                            </div>
+                        </div>
+                    `;
+                case 10:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🎡 ${task.title}</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">اسپن بٹن پر کلک کریں اور پہیہ گھمائیں!</p>
+                            <div id="wheelDisplay" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--neon-green); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; transition: transform 2s ease-out;">🎡</div>
+                            <button class="btn-neon" style="width: 100%;" onclick="spinWheelAction(${task.id})">پہیہ گھمائیں 🚀</button>
+                        </div>
+                    `;
+                case 11:
+                    const secretNum = Math.floor(Math.random() * 5) + 1;
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">🎯 ${task.title}</h3>
+                            <p style="font-size: 0.88rem; color: #fff; margin-bottom: 16px;">1 سے 5 کے درمیان چھپا درست نمبر چنیں:</p>
+                            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px;">
+                                <button class="btn-secondary" style="width: 45px; height: 45px; font-weight: 800;" onclick="checkGuessNum(1, ${secretNum}, ${task.id})">1</button>
+                                <button class="btn-secondary" style="width: 45px; height: 45px; font-weight: 800;" onclick="checkGuessNum(2, ${secretNum}, ${task.id})">2</button>
+                                <button class="btn-secondary" style="width: 45px; height: 45px; font-weight: 800;" onclick="checkGuessNum(3, ${secretNum}, ${task.id})">3</button>
+                                <button class="btn-secondary" style="width: 45px; height: 45px; font-weight: 800;" onclick="checkGuessNum(4, ${secretNum}, ${task.id})">4</button>
+                                <button class="btn-secondary" style="width: 45px; height: 45px; font-weight: 800;" onclick="checkGuessNum(5, ${secretNum}, ${task.id})">5</button>
+                            </div>
+                        </div>
+                    `;
+                case 12:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">⭐ ${task.title}</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">چمکتے ستارے پر کلک کریں!</p>
+                            <div style="height: 120px; background: #05070c; border: 1px solid var(--card-border); border-radius: 12px; position: relative; overflow: hidden; margin-bottom: 16px;">
+                                <div id="floatingStar" style="position: absolute; top: 35%; left: 40%; font-size: 2.5rem; cursor: pointer; transition: all 0.3s;" onclick="completeTaskSuccess(${task.id})">⭐</div>
+                            </div>
+                        </div>
+                    `;
+                default:
+                    return `
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--neon-green); margin-bottom: 8px;">${task.icon} ${task.title}</h3>
+                            <p style="font-size: 0.88rem; color: #fff; margin-bottom: 16px;">${task.desc}</p>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 20px;">ٹاسک مکمل کرنے کے لیے نیچے دیے گئے تصدیقی بٹن پر کلک کریں۔</p>
+                            <button class="btn-neon" style="width: 100%;" onclick="completeTaskSuccess(${task.id})">ٹاسک جمع کرائیں (+${task.reward} Pts) ✨</button>
+                        </div>
+                    `;
+            }
+        }
+
+        function checkMathAnswer(selected, correct, taskId) {
+            if (selected === correct) {
+                completeTaskSuccess(taskId);
+            } else {
+                showToast('غلط جواب! دوبارہ کوشش کریں', 'error');
+            }
+        }
+
+        function checkWordUnscramble(taskId) {
+            const input = document.getElementById('unscrambleInput').value.trim().toUpperCase();
+            if (input === 'BONUS') {
+                completeTaskSuccess(taskId);
+            } else {
+                showToast('غلط لفظ! "BONUS" ٹائپ کریں۔', 'error');
+            }
+        }
+
+        let tapCount = 0;
+        function handleSpeedTap(taskId) {
+            tapCount++;
+            const counter = document.getElementById('clickerCounter');
+            if (counter) counter.innerText = `${tapCount} / 5`;
+            if (tapCount >= 5) {
+                tapCount = 0;
+                completeTaskSuccess(taskId);
+            }
+        }
+
+        function revealScratch(taskId) {
+            const box = document.getElementById('scratchBox');
+            if (box) {
+                box.style.background = 'linear-gradient(135deg, #15803d, #22c55e)';
+                box.innerHTML = '🎉 مبارک ہو! +30 پوائنٹس!';
+                setTimeout(() => completeTaskSuccess(taskId), 800);
+            }
+        }
+
+        function spinWheelAction(taskId) {
+            const wheel = document.getElementById('wheelDisplay');
+            if (wheel) {
+                wheel.style.transform = 'rotate(1080deg)';
+                setTimeout(() => {
+                    completeTaskSuccess(taskId);
+                }, 2000);
+            }
+        }
+
+        function checkGuessNum(selected, secret, taskId) {
+            if (selected === secret) {
+                completeTaskSuccess(taskId);
+            } else {
+                showToast(`غلط! چھپا نمبر ${secret} تھا۔ دوبارہ کوشش کریں!`, 'error');
+            }
+        }
+
+        // --- CALENDAR SYSTEM (30/31 DAYS) ---
+        function renderCalendar() {
+            if (!currentUser) return;
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            const now = new Date();
+            const totalDays = 31;
+            const currentDayNum = now.getDate();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+
+            let unlockedCount = 0;
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dateKey = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isUnlocked = currentUser.dailyLog && currentUser.dailyLog[dateKey];
+                const isToday = day === currentDayNum;
+
+                if (isUnlocked) unlockedCount++;
+
+                const dayCell = document.createElement('div');
+                dayCell.className = `calendar-day ${isUnlocked ? 'unlocked' : ''} ${isToday ? 'today' : ''}`;
+                
+                dayCell.innerHTML = `
+                    <span>${day}</span>
+                    <span class="status-icon">${isUnlocked ? '✔' : '🔒'}</span>
+                `;
+
+                dayCell.onclick = () => {
+                    if (isUnlocked) {
+                        showToast(`دن ${day}: اس تاریخ کا ڈے انلاک ہے! ✔`);
+                    } else if (isToday) {
+                        showToast('آج کا دن ہے! ٹاسک مکمل کر کے کیلنڈر گرڈ انلاک کر سکتے ہیں۔');
+                    } else {
+                        showToast(`دن ${day}: یہ دن مقفل ہے۔`, 'error');
+                    }
+                };
+
+                calendarGrid.appendChild(dayCell);
+            }
+
+            document.getElementById('calendarSummaryTag').innerText = `${unlockedCount} / ${totalDays} انلاکڈ`;
+        }
+
+        // --- LUCKY DRAW & WITHDRAW SYSTEM ---
+        function renderLuckyDrawPage() {
+            if (!currentUser) return;
+
+            const currentPoints = currentUser.points || 0;
+            const container = document.getElementById('ticketStatusContent');
+
+            if (currentUser.enteredDraw) {
+                const ticket = currentUser.drawTicket || 'LD-883920';
+                container.innerHTML = `
+                    <p style="font-size: 0.85rem; color: var(--neon-green); font-weight: 800;">✅ آپ کامیابی سے اس ماہ کے گرینڈ ڈرا میں شامل ہیں!</p>
+                    <div class="ticket-number">#${ticket}</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">قرعہ اندازی ہر ماہ کی 1 تاریخ کو خودکار طریقے سے ہوگی۔</p>
+                `;
+            } else {
+                container.innerHTML = `
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">قرعہ اندازی میں اینٹری کے لیے 500 پوائنٹس درکار ہیں۔</p>
+                    <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" ${currentPoints < 500 ? 'disabled' : ''} onclick="enterLuckyDraw()">
+                        ${currentPoints < 500 ? 'کم از کم 500 پوائنٹس درکار ہیں' : 'اینٹری لیں (500 پوائنٹس)'}
+                    </button>
+                `;
+            }
+
+            document.getElementById('withdrawBalanceTag').innerText = `Rs. ${currentUser.balance || 0}`;
+        }
+
+        function enterLuckyDraw() {
+            if (!currentUser) return;
+            if ((currentUser.points || 0) < 500) {
+                showToast('آپ کے پاس 500 پوائنٹس مکمل نہیں ہیں!', 'error');
+                return;
+            }
+
+            currentUser.points -= 500;
+            currentUser.enteredDraw = true;
+            currentUser.drawTicket = 'LD-' + Math.floor(100000 + Math.random() * 900000);
+
+            saveCurrentUserData();
+            showToast('مبارک ہو! آپ لکی ڈرا میں شامل ہو چکے ہیں۔ ٹکٹ: #' + currentUser.drawTicket);
+            updateUserDisplays();
+            renderLuckyDrawPage();
+        }
+
+        function handleWithdraw(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const method = document.getElementById('withdrawMethod').value;
+            const account = document.getElementById('withdrawAccount').value.trim();
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+
+            const currentBal = currentUser.balance || 0;
+
+            if (amount > currentBal) {
+                showToast('آپ کا بقایا بیلنس اس رقم سے کم ہے!', 'error');
+                return;
+            }
+
+            currentUser.balance -= amount;
+            saveCurrentUserData();
+
+            showToast(`Rs. ${amount} کی درخواست (${method}: ${account}) موصول ہو گئی!`);
+            updateUserDisplays();
+            renderLuckyDrawPage();
+            e.target.reset();
+        }
+
+        // --- LEADERBOARD PAGE ---
+        function renderLeaderboard() {
+            if (!currentUser) return;
+
+            const dummyLeaders = [
+                { name: "حمزہ شیخ", points: 500, city: "کراچی" },
+                { name: "سعد علی", points: 480, city: "لاہور" },
+                { name: "مریم فاطمہ", points: 450, city: "اسلام آباد" },
+                { name: "احمد حسن", points: 410, city: "فیصل آباد" },
+                { name: "ثنا طارق", points: 390, city: "ملتان" }
+            ];
+
+            const listContainer = document.getElementById('leaderboardList');
+            listContainer.innerHTML = '';
+
+            const userRow = document.createElement('div');
+            userRow.className = 'leader-item current-user';
+            userRow.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-weight: 800; color: var(--neon-green);">آپ</span>
+                    <div>
+                        <strong style="color: #fff;">${currentUser.name}</strong>
+                        <div style="font-size: 0.72rem; color: var(--text-muted);">لائیو اسٹیٹس</div>
+                    </div>
+                </div>
+                <span class="reward-tag">${currentUser.points || 0} Pts</span>
+            `;
+            listContainer.appendChild(userRow);
+
+            dummyLeaders.forEach((leader, idx) => {
+                const item = document.createElement('div');
+                item.className = 'leader-item';
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 700; color: var(--text-muted); width: 20px;">#${idx + 1}</span>
+                        <div>
+                            <strong style="color: #fff;">${leader.name}</strong>
+                            <div style="font-size: 0.72rem; color: var(--text-muted);">${leader.city}</div>
+                        </div>
+                    </div>
+                    <span style="font-weight: 800; color: var(--neon-green);">${leader.points} Pts</span>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        // --- PROFILE PAGE ---
+        function renderProfilePage() {
+            if (!currentUser) return;
+            document.getElementById('profileName').innerText = currentUser.name;
+            document.getElementById('profileEmail').innerText = currentUser.email;
+            document.getElementById('profileAvatar').innerText = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('profPoints').innerText = currentUser.points || 0;
+            document.getElementById('profBalance').innerText = `Rs. ${currentUser.balance || 0}`;
+        }
+
+        function editProfileName() {
+            if (!currentUser) return;
+            const newName = prompt('نیا نام درج کریں:', currentUser.name);
+            if (newName && newName.trim()) {
+                currentUser.name = newName.trim();
+                saveCurrentUserData();
+                showToast('نام کامیابی سے تبدیل ہو گیا!');
+                updateUserDisplays();
+                renderProfilePage();
+            }
+        }
+
+        function resetAccountProgress() {
+            if (!currentUser) return;
+            if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
+                currentUser.taskTimestamps = {};
+                currentUser.lastBonus = 0;
+                saveCurrentUserData();
+                showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
+                updateUserDisplays();
+                if (activePage === 'tasks') renderTasks();
+            }
+        }
+
+        // --- REFERRAL & MORE SYSTEM ---
+        function renderMorePage() {
+            if (!currentUser) return;
+
+            const refLink = `https://earningplatform.pk/join?ref=${encodeURIComponent(currentUser.email)}`;
+            document.getElementById('referralLinkInput').value = refLink;
+
+            const refs = currentUser.referrals || 0;
+            document.getElementById('refCountBadge').innerText = `${refs} / 5 ریفرلز`;
+
+            const shareArea = document.getElementById('refShareButtonsArea');
+            const limitMsg = document.getElementById('refLimitMessage');
+            const simulateBtn = document.getElementById('refSimulateBtn');
+
+            if (refs >= 5) {
+                shareArea.style.display = 'none';
+                limitMsg.style.display = 'block';
+                simulateBtn.disabled = true;
+                simulateBtn.innerText = 'حد ختم ہو چکی ہے (Limit Reached)';
+            } else {
+                shareArea.style.display = 'grid';
+                limitMsg.style.display = 'none';
+                simulateBtn.disabled = false;
+                simulateBtn.innerText = '➕ ٹیسٹ ریفرل شامل کریں (Simulate Demo Referral)';
+            }
+        }
+
+        function copyReferralLink() {
+            if ((currentUser.referrals || 0) >= 5) {
+                showToast('حد ختم ہو چکی ہے (Limit Reached)', 'error');
+                return;
+            }
+            const input = document.getElementById('referralLinkInput');
+            input.select();
+            document.execCommand('copy');
+            showToast('ریفرل لنک کاپی ہو گیا! 📋');
+        }
+
+        function shareOnWhatsApp() {
+            if ((currentUser.referrals || 0) >= 5) {
+                showToast('حد ختم ہو چکی ہے (Limit Reached)', 'error');
+                return;
+            }
+            const refLink = document.getElementById('referralLinkInput').value;
+            const text = `السلام علیکم! میں اس آن لائن پلیٹ فارم پر روزانہ گیمز کھیل کر پیسے کما رہا ہوں۔ آپ بھی ابھی جوائن کریں:\n${refLink}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function simulateAddReferral() {
+            if (!currentUser) return;
+            const refs = currentUser.referrals || 0;
+            if (refs >= 5) {
+                showToast('حد ختم ہو چکی ہے (Limit Reached)!', 'error');
+                return;
+            }
+
+            currentUser.referrals = refs + 1;
+            currentUser.points = (currentUser.points || 0) + 50;
+            currentUser.balance = (currentUser.balance || 0) + 50;
+
+            saveCurrentUserData();
+            showToast(`ریفرل شامل ہو گیا (${currentUser.referrals}/5)! +50 پوائنٹس بونس موصول ہوا۔`);
+            updateUserDisplays();
+            renderMorePage();
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('آپ کا پیغام ایڈمن کو بھیج دیا گیا ہے۔ جلد رابطہ کیا جائے گا۔');
+            e.target.reset();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initAppUI();
+        });
+    </script>
+</body>
+</html>
