@@ -2211,25 +2211,15 @@
         }
 
       function resetAccountProgress() {
-    if (!currentUser) return;
-
-    // 24 گھنٹے کی چیکنگ
-    if (currentUser.lastResetTime) {
-        const now = Date.now();
-        if (now - currentUser.lastResetTime < 86400000) {
-            showToast('یہ اپڈیٹ 24 گھنٹے بعد دوبارہ ہوگی!', 'error');
-            return;
-        }
-    }
-
-alert('اپ ڈیٹ 24 گھنٹے بعد دوبارہ ہوگی!');
-        currentUser.taskTimestamps = {};
-        currentUser.lastBonus = 0;
-        currentUser.lastResetTime = Date.now(); // وقت سیو کریں
-        saveCurrentUserData();
-        showToast('ٹاسک دوبارہ شروع ہو گئے!');
-        updateUserDisplays();
-        if (activePage === 'tasks') renderTasks();
+            if (!currentUser) return;
+            if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
+                currentUser.taskTimestamps = {};
+                currentUser.lastBonus = 0;
+                saveCurrentUserData();
+                showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
+            alert('اپ ڈیٹ 24 گھنٹے بعد دوبارہ ہوگی!');
+                updateUserDisplays();
+                if (activePage === 'tasks') renderTasks();
     }
             }
               
