@@ -2209,16 +2209,37 @@
                 renderProfilePage();
             }
         }
+function resetAccountProgress() {
+    if (!currentUser) return;
 
-        function resetAccountProgress() {
-            if (!currentUser) return;
-            if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
-                currentUser.taskTimestamps = {};
-                currentUser.lastBonus = 0;
-                saveCurrentUserData();
-                showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
-                updateUserDisplays();
-                if (activePage === 'tasks') renderTasks();
+    // 1. چیک کریں کہ کیا اس نے پہلے ہی ری سیٹ کیا ہوا ہے؟
+    if (currentUser.lastResetTime) {
+        // موجودہ وقت اور پچھلے ری سیٹ کے وقت میں فرق نکالیں
+        const now = Date.now();
+        const timeDiff = now - currentUser.lastResetTime;
+        const twentyFourHours = 24 * 60 * 60 * 1000; // 24 گھنٹے (ملی سیکنڈز میں)
+
+        // اگر 24 گھنٹے نہیں گزرے، تو میسج دیں اور روک دیں
+        if (timeDiff < twentyFourHours) {
+            const hoursLeft = Math.ceil((twentyFourHours - timeDiff) / (60 * 60 * 1000));
+            showToast(`یہ اپڈیٹ ${hoursLeft} گھنٹے بعد دوبارہ ہوگی!`, 'error');
+            return;
+        }
+    }
+
+    // 2. اگر 24 گھنٹے گزر چکے ہیں (یا پہلی بار ہے)، تو ری سیٹ کریں
+    currentUser.taskTimestamps = {};
+    currentUser.lastBonus = 0;
+    currentUser.points = 0; // پوائنٹس بھی 0 کریں تاکہ دوبارہ شروع ہو سکے
+    
+    // موجودہ وقت کو محفوظ کریں تاکہ اگلی بار 24 گھنٹے چیک ہو سکے
+    currentUser.lastResetTime = Date.now(); 
+
+    saveCurrentUserData();
+    showToast('ٹاسک اور پوائنٹس کامیابی سے ری اپڈیٹ ہو گئے!');
+    updateUserDisplays();
+    if (activePage === 'tasks') renderTasks();
+        }
             }
         }
 
