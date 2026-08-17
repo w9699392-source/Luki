@@ -2210,15 +2210,7 @@
             }
         }
 
-        function resetAccountProgress() {
-            if (!currentUser) return;
-            if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
-                currentUser.taskTimestamps = {};
-                currentUser.lastBonus = 0;
-                saveCurrentUserData();
-                showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
-                updateUserDisplays();
-                if (activePage === 'tasks') renderTasks();
+
             }
         }
 
