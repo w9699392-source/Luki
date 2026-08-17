@@ -2224,7 +2224,7 @@ function resetAccountProgress() {
             const hoursLeft = Math.ceil((twentyFourHours - timeDiff) / (60 * 60 * 1000));
             showToast(`یہ اپڈیٹ ${hoursLeft} گھنٹے بعد دوبارہ ہوگی!`, 'error');
             return;
-        }
+        
     }
 
     // 2. اگر 24 گھنٹے گزر چکے ہیں (یا پہلی بار ہے)، تو ری سیٹ کریں
@@ -2240,8 +2240,8 @@ function resetAccountProgress() {
     updateUserDisplays();
     if (activePage === 'tasks') renderTasks();
         }
-            }
-        }
+            
+        
 
         // --- REFERRAL & MORE SYSTEM ---
         function renderMorePage() {
