@@ -1289,10 +1289,28 @@
                 </div>
 
                 <!-- Test button to simulate referral -->
-                <button id="refSimulateBtn" class="btn-secondary" style="width: 100%; margin-top: 10px; font-size: 0.82rem;" onclick="simulateAddReferral()">
-                    ➕ ٹیسٹ ریفرل شامل کریں (Simulate Demo Referral)
-                </button>
-            </div>
+        <!-- ============================================ -->
+<!-- 1. HTML Code (Paste this inside your Profile/Settings page) -->
+<!-- ============================================ -->
+
+<div class="profile-card" style="margin-top: 20px; padding: 15px; background: #1a1a1a; border-radius: 15px; border: 1px solid #333;">
+    
+    <!-- Button Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h3 style="color: #00ff88; margin: 0; font-size: 1.1rem;">🔄 دوبارہ شروع کریں</h3>
+        <span style="background: #ff4444; color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem;">24h Limit</span>
+    </div>
+
+    <!-- Description -->
+    <p style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 15px; line-height: 1.5;">
+        نوٹ: آپ اپنے ٹاسک صرف <strong>ایک بار</strong> ری سیٹ کر سکتے ہیں۔ ری سیٹ کے بعد اگلا ری سیٹ 24 گھنٹے بعد ممکن ہوگا۔
+    </p>
+    
+    <!-- Reset Button -->
+    <button id="resetTasksBtn" class="btn-neon" style="width: 100%; background: #ff4444; border-color: #ff4444; color: white; padding: 12px; border-radius: 50px; font-weight: bold; cursor: pointer;">
+        🔄 ری سیٹ کریں اور دوبارہ شروع کریں
+    </button>
+</div>        
 
             <!-- Links to Extra Subpages -->
             <div class="card">
@@ -2210,19 +2228,64 @@
             }
         }
 
-      function resetAccountProgress() {
-            if (!currentUser) return;
-    if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
-                currentUser.taskTimestamps = {};
-                currentUser.lastBonus = 0;
-                saveCurrentUserData();
-                showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
+        // ==============================================
+// 2. JavaScript Code (Paste this at the end of your JS file)
+// ==============================================
+
+// Reset Function with 24-Hour Limit (Only once)
+function resetAccountProgress() {
+    if (!currentUser) return;
+
+    // Step 1: Check if the user has already reset
+    // we use a property called 'hasAlreadyReset'
+    if (currentUser.hasAlreadyReset === true) {
+        
+        // Check if 24 hours have passed since last reset
+        const now = Date.now();
+        const lastResetTime = currentUser.lastResetTime || 0;
+        const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+        if (now - lastResetTime < twentyFourHours) {
+            // Calculate remaining hours for the message
+            const timeLeft = Math.ceil((twentyFourHours - (now - lastResetTime)) / (1000 * 60 * 60));
             
-                updateUserDisplays();
-                if (activePage === 'tasks') renderTasks();
+            // Show error message
+            showToast(`⏳ آپ پہلے ہی ری سیٹ کر چکے ہیں! اگلا ری سیٹ ${timeLeft} گھنٹے بعد ہوگا۔`, 'error');
+            return;
+        }
     }
-            }
-              
+
+    // Step 2: Ask for confirmation
+    if (confirm("کیا آپ واقعی اپنے تمام ٹاسک اور پوائنٹس دوبارہ شروع کرنا چاہتے ہیں؟ یہ عمل صرف ایک بار ممکن ہے!")) {
+        
+        // Step 3: Perform the Reset
+        currentUser.taskTimestamps = {};
+        currentUser.points = 0; // Reset points to 0
+        currentUser.lastBonus = 0;
+        
+        // Step 4: Mark the user as 'Reset Done' and save the time
+        currentUser.hasAlreadyReset = true;
+        currentUser.lastResetTime = Date.now();
+
+        // Step 5: Save and Update
+        saveCurrentUserData();
+        showToast('✅ ٹاسک کامیابی سے ری سیٹ ہو گئے! اگلا ری سیٹ 24 گھنٹے بعد۔');
+        updateUserDisplays();
+        
+        if (activePage === 'tasks') renderTasks();
+    }
+}
+
+// ==============================================
+// Event Listener Setup (To connect the HTML button to the function)
+// Run this once when the page loads
+// ==============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const resetBtn = document.getElementById('resetTasksBtn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', resetAccountProgress);
+    }
+});      
             }
 
         }      
