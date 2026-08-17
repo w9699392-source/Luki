@@ -2212,12 +2212,12 @@
 
       function resetAccountProgress() {
             if (!currentUser) return;
-            if (confirm('کیا آپ اپنے ڈیمو ٹاسکس ہسٹری اور بونس کو ری سیٹ کرنا چاہتے ہیں؟')) {
+            if (confirm('کیا آپ اپنے ٹاسکس کو دوبارہ شروع کرنا چاہتے ہیں؟ (اگر آپ ری سیٹ کریں گے تو 24 گھنٹے بعد ہوگی)')) {
                 currentUser.taskTimestamps = {};
                 currentUser.lastBonus = 0;
                 saveCurrentUserData();
                 showToast('ٹاسک ہسٹری ری سیٹ ہو گئی۔');
-            alert('اپ ڈیٹ 24 گھنٹے بعد دوبارہ ہوگی!');
+            showToast('اپ ڈیٹ 24 گھنٹے بعد دوبارہ ہوگی', 'error');
                 updateUserDisplays();
                 if (activePage === 'tasks') renderTasks();
     }
