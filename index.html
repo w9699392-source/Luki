@@ -2077,45 +2077,32 @@
 
         // --- LUCKY DRAW & WITHDRAW SYSTEM ---
         function renderLuckyDrawPage() {
-            if (!currentUser) return;
+    if (!currentUser) return;
 
-            const currentPoints = currentUser.points || 0;
-            const container = document.getElementById('ticketStatusContent');
+    const currentPoints = currentUser.points || 0;
+    const container = document.getElementById('ticketStatusContent');
 
-            if (currentUser.enteredDraw) {
-                const ticket = currentUser.drawTicket || 'LD-883920';
-                container.innerHTML = `
-                    <p style="font-size: 0.85rem; color: var(--neon-green); font-weight: 800;">✅ آپ کامیابی سے اس ماہ کے گرینڈ ڈرا میں شامل ہیں!</p>
-                    <div class="ticket-number">#${ticket}</div>
-                    <p style="font-size: 0.75rem; color: var(--text-muted);">قرعہ اندازی ہر ماہ کی 1 تاریخ کو خودکار طریقے سے ہوگی۔</p>
-                `;
-            } else {
-                container.innerHTML = `
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">قرعہ اندازی میں اینٹری کے لیے 500 پوائنٹس درکار ہیں۔</p>
-                    <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" ${currentPoints < 500 ? 'disabled' : ''} onclick="enterLuckyDraw()">
-                        ${currentPoints < 500 ? 'کم از کم 500 پوائنٹس درکار ہیں' : 'اینٹری لیں (500 پوائنٹس)'}
-                    </button>
-                `;
-            }
+    // اگر صارف کے پاس 500 پوائنٹس ہیں تو وہ دوبارہ ڈرا کر سکتا ہے
+    if (currentUser.enteredDraw && currentPoints < 500) {
+        // موجودہ ٹکٹ دکھائیں
+        const ticket = currentUser.drawTicket || 'LD-883920';
+        container.innerHTML = `
+            <p style="font-size: 0.85rem; color: var(--neon-green); font-weight: 800;">✅ آپ کامیابی سے اس ماہ کے گرینڈ ڈرا میں شامل ہیں!</p>
+            <div class="ticket-number">#${ticket}</div>
+            <p style="font-size: 0.75rem; color: var(--text-muted);">اگلے ڈرا کے لیے مزید 500 پوائنٹس حاصل کریں۔</p>
+        `;
+    } else {
+        // اگر پوائنٹس 500 یا زیادہ ہیں تو دوبارہ اینٹری کا بٹن دکھائیں
+        container.innerHTML = `
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">قرعہ اندازی میں اینٹری کے لیے 500 پوائنٹس درکار ہیں۔</p>
+            <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" ${currentPoints < 500 ? 'disabled' : ''} onclick="enterLuckyDraw()">
+                ${currentPoints < 500 ? 'کم از کم 500 پوائنٹس درکار ہیں' : 'اینٹری لیں (500 پوائنٹس)'}
+            </button>
+        `;
+    }
 
-            document.getElementById('withdrawBalanceTag').innerText = `Rs. ${currentUser.balance || 0}`;
-        }
-
-        function enterLuckyDraw() {
-            if (!currentUser) return;
-            if ((currentUser.points || 0) < 500) {
-                showToast('آپ کے پاس 500 پوائنٹس مکمل نہیں ہیں!', 'error');
-                return;
-            }
-
-            currentUser.points -= 500;
-            currentUser.enteredDraw = true;
-            currentUser.drawTicket = 'LD-' + Math.floor(100000 + Math.random() * 900000);
-
-            saveCurrentUserData();
-            showToast('مبارک ہو! آپ لکی ڈرا میں شامل ہو چکے ہیں۔ ٹکٹ: #' + currentUser.drawTicket);
-            updateUserDisplays();
-            renderLuckyDrawPage();
+    document.getElementById('withdrawBalanceTag').innerText = `Rs. ${currentUser.balance || 0}`;
+        
         }
 
         function handleWithdraw(e) {
