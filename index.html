@@ -1123,37 +1123,82 @@
                 <!-- Days grid populated by JS -->
             </div>
         </section>
-<!--POINTS WITHDRAW SECTION-->
-<div class="card">
-    <div class="card-header">
-        <div class="card-title">💎 پوائنٹس وِدڈر (Withdraw Points)</div>
-        <span id="currentUserPointsLabel" class="reward-tag">0 پوائنٹس</span>
+<!-- =================== LUCKY DRAW & POINTS WITHDRAW PAGE =================== -->
+<section id="drawPage" class="page-screen">
+    <h2 style="font-size: 1.25rem; margin-bottom: 4px;">🎁 بمپر لکی ڈرا و پوائنٹس وِدڈر</h2>
+    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">500 پوائنٹس مکمل کر کے ماہانہ 50,000 PKR کے ڈرا میں اینٹری لیں</p>
+
+    <!-- Lucky Draw Status Area -->
+    <div class="ticket-box" style="background: linear-gradient(135deg, #0f2d1b, #131d31); border: 2px dashed var(--neon-green); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.1rem; color: #fff;">آپ کی اینٹری اسٹیٹس</h3>
+        <div id="ticketStatusContent">
+            <!-- JavaScript خود بخود یہاں بٹن یا ٹکٹ دکھائے گا -->
+        </div>
     </div>
 
-    <form onsubmit="handlePointsWithdraw(event)">
-        <div class="form-group">
-            <label>پیمنٹ میتھڈ چنیں</label>
-            <select id="points-method" class="form-control" style="background: #05070c;">
-                <option value="EasyPaisa">EasyPaisa (ایزی پیسہ)</option>
-                <option value="JazzCash">JazzCash (جاز کیش)</option>
-                <option value="Bank Transfer">Bank Transfer (بینک ٹرانسفر)</option>
-            </select>
+    <!-- ==================== POINTS WITHDRAW SECTION ==================== -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">💎 پوائنٹس وِدڈر (Withdraw Points)</div>
+            <span id="currentUserPointsLabel" class="reward-tag">0 پوائنٹس</span>
         </div>
 
-        <div class="form-group">
-            <label>اکاؤنٹ نمبر / موبائل نمبر</label>
-            <input type="text" id="points-acc-num" class="form-control" placeholder="03001234567" required>
-        </div>
+        <form onsubmit="handlePointsWithdraw(event)">
+            <div class="form-group">
+                <label>پیمنٹ میتھڈ چنیں</label>
+                <select id="points-method" class="form-control" style="background: #05070c;">
+                    <option value="EasyPaisa">EasyPaisa (ایزی پیسہ)</option>
+                    <option value="JazzCash">JazzCash (جاز کیش)</option>
+                    <option value="Bank Transfer">Bank Transfer (بینک ٹرانسفر)</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label>پوائنٹس (کم از کم 500)</label>
-            <input type="number" id="points-amount" class="form-control" placeholder="500" min="500" required>
-        </div>
+            <div class="form-group">
+                <label>اکاؤنٹ نمبر / موبائل نمبر</label>
+                <input type="text" id="points-acc-num" class="form-control" placeholder="03001234567" required>
+            </div>
 
-        <button type="submit" class="btn-neon" style="width: 100%;">پوائنٹس کی درخواست بھیجیں 📩</button>
-    </form>
-</div>
-<!-- END POINTS WITHDRAW -->
+            <div class="form-group">
+                <label>پوائنٹس (کم از کم 500)</label>
+                <input type="number" id="points-amount" class="form-control" placeholder="500" min="500" required>
+            </div>
+
+            <button type="submit" class="btn-neon" style="width: 100%;">پوائنٹس کی درخواست بھیجیں 📩</button>
+        </form>
+    </div>
+    <!-- ==================== END POINTS WITHDRAW ==================== -->
+
+    <!-- Past Winners Section -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">🎉 گزشتہ ماہ کے لکی ڈرا فاتحین</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: #0a0f1d; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: var(--neon-green);">🥇 محمد بلال (لاہور)</strong>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-92810</div>
+                </div>
+                <span style="font-weight: 700; color: #fff;">50,000 PKR</span>
+            </div>
+            <div style="background: #0a0f1d; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: #94a3b8;">🥈 عائشہ خان (کراچی)</strong>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-44102</div>
+                </div>
+                <span style="font-weight: 700; color: #fff;">25,000 PKR</span>
+            </div>
+            <div style="background: #0a0f1d; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: #b45309;">🥉 عثمان طارق (پشاور)</strong>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">ٹکٹ: #LD-10583</div>
+                </div>
+                <span style="font-weight: 700; color: #fff;">10,000 PKR</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =================== END LUCKY DRAW PAGE =================== -->
 
     <!-- Past Winners Section -->
     <div class="card">
