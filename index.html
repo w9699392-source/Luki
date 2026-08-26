@@ -2277,6 +2277,7 @@ function handleWithdrawSubmit(e) {
  * 8. GOOGLE APPS SCRIPT POST SYNC
  */
 function syncToGoogleSheet(payload) {
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQjX6_joYbTk3D7-Qo3Ts1rTCGUREjntEpetdAtPyICZUhX8Qq-vB8JaVyFG6JWihx/exec";
     if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("REPLACE_WITH")) {
         console.log("Mock Sync Payload (Configure GOOGLE_SCRIPT_URL):", payload);
         return;
