@@ -1123,47 +1123,38 @@
                 <!-- Days grid populated by JS -->
             </div>
         </section>
+<!-- ==================== POINTS WITHDRAW SECTION ==================== -->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">💎 پوائنٹس وِدڈر (Withdraw Points)</div>
+        <span id="currentUserPointsLabel" class="reward-tag">0 پوائنٹس</span>
+    </div>
 
-        <!-- 4. LUCKY DRAW & WITHDRAW PAGE -->
-        <section id="drawPage" class="page-screen">
-            <h2 style="font-size: 1.25rem; margin-bottom: 4px;">🎁 بمپر لکی ڈرا و کیش آؤٹ</h2>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">500 پوائنٹس مکمل کر کے ماہانہ 50,000 PKR کے ڈرا میں اینٹری لیں</p>
+    <form onsubmit="handlePointsWithdraw(event)">
+        <div class="form-group">
+            <label>پیمنٹ میتھڈ چنیں</label>
+            <select id="points-method" class="form-control" style="background: #05070c;">
+                <option value="EasyPaisa">EasyPaisa (ایزی پیسہ)</option>
+                <option value="JazzCash">JazzCash (جاز کیش)</option>
+                <option value="Bank Transfer">Bank Transfer (بینک ٹرانسفر)</option>
+            </select>
+        </div>
 
-            <div class="ticket-box">
-                <h3 style="font-size: 1.1rem; color: #fff;">آپ کی اینٹری اسٹیٹس</h3>
-                <div id="ticketStatusContent">
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">آپ نے ابھی تک اس ماہ کے ڈرا میں اینٹری نہیں لی۔</p>
-                    <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" onclick="enterLuckyDraw()">اینٹری لیں (500 پوائنٹس)</button>
-                </div>
-            </div>
+        <div class="form-group">
+            <label>اکاؤنٹ نمبر / موبائل نمبر</label>
+            <input type="text" id="points-acc-num" class="form-control" placeholder="03001234567" required>
+        </div>
 
-            <!-- Cash Withdrawal Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">💸 رقم کا نکالنا (Withdraw Balance)</div>
-                    <span class="reward-tag" id="withdrawBalanceTag">Rs. 0</span>
-                </div>
-                <form onsubmit="handleWithdraw(event)">
-                    <div class="form-group">
-                        <label>پیمنٹ میتھڈ چنیں</label>
-                        <select id="withdrawMethod" class="form-control" style="background: #05070c;">
-                            <option value="EasyPaisa">EasyPaisa (ایزی پیسہ)</option>
-                            <option value="JazzCash">JazzCash (جاز کیش)</option>
-                            <option value="Bank Transfer">Bank Transfer (بینک ٹرانسفر)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>اکاؤنٹ نمبر / موبائل نمبر</label>
-                        <input type="text" id="withdrawAccount" class="form-control" placeholder="03001234567" required>
-                    </div>
-                    <div class="form-group">
-                        <label>رقم (روپوں میں - کم از کم Rs. 500)</label>
-                        <input type="number" id="withdrawAmount" class="form-control" placeholder="500" min="500" required>
-                    </div>
-                    <button type="submit" class="btn-neon" style="width: 100%;">رقم کی درخواست بھیجیں 📩</button>
-                </form>
-            </div>
+        <div class="form-group">
+            <label>پوائنٹس (کم از کم 500)</label>
+            <input type="number" id="points-amount" class="form-control" placeholder="500" min="500" required>
+        </div>
 
+        <button type="submit" class="btn-neon" style="width: 100%;">پوائنٹس کی درخواست بھیجیں 📩</button>
+    </form>
+</div>
+<!-- ==================== END POINTS WITHDRAW ==================== -->
+        
             <!-- Past Winners Section -->
             <div class="card">
                 <div class="card-header">
@@ -2075,73 +2066,59 @@
             document.getElementById('calendarSummaryTag').innerText = `${unlockedCount} / ${totalDays} انلاکڈ`;
         }
 
-        // --- LUCKY DRAW & WITHDRAW SYSTEM ---
-        function renderLuckyDrawPage() {
-            if (!currentUser) return;
+  // ==================== POINTS WITHDRAW SYSTEM + GOOGLE SHEET ====================
 
-            const currentPoints = currentUser.points || 0;
-            const container = document.getElementById('ticketStatusContent');
+// 1. گوگل شیٹ کا URL (اپنا کاپی شدہ URL یہاں لگائیں)
+const pointsScriptUrl = "https://script.google.com/macros/s/AKfy.../exec"; // اپنا URL یہاں لگائیں
 
-            if (currentUser.enteredDraw) {
-                const ticket = currentUser.drawTicket || 'LD-883920';
-                container.innerHTML = `
-                    <p style="font-size: 0.85rem; color: var(--neon-green); font-weight: 800;">✅ آپ کامیابی سے اس ماہ کے گرینڈ ڈرا میں شامل ہیں!</p>
-                    <div class="ticket-number">#${ticket}</div>
-                    <p style="font-size: 0.75rem; color: var(--text-muted);">قرعہ اندازی ہر ماہ کی 1 تاریخ کو خودکار طریقے سے ہوگی۔</p>
-                `;
-            } else {
-                container.innerHTML = `
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0;">قرعہ اندازی میں اینٹری کے لیے 500 پوائنٹس درکار ہیں۔</p>
-                    <button id="enterDrawBtn" class="btn-neon" style="margin-top: 10px;" ${currentPoints < 500 ? 'disabled' : ''} onclick="enterLuckyDraw()">
-                        ${currentPoints < 500 ? 'کم از کم 500 پوائنٹس درکار ہیں' : 'اینٹری لیں (500 پوائنٹس)'}
-                    </button>
-                `;
-            }
+// 2. پوائنٹس نکالنے کا فنکشن
+function handlePointsWithdraw(e) {
+    e.preventDefault();
+    
+    const method = document.getElementById('points-method').value;
+    const account = document.getElementById('points-acc-num').value.trim();
+    const points = parseInt(document.getElementById('points-amount').value);
 
-            document.getElementById('withdrawBalanceTag').innerText = `Rs. ${currentUser.balance || 0}`;
-        }
+    // چیک کریں کہ کیا پوائنٹس کافی ہیں؟
+    if (points > (currentUser.points || 0)) {
+        showToast('آپ کے پاس کافی پوائنٹس نہیں ہیں!', 'error');
+        return;
+    }
 
-        function enterLuckyDraw() {
-            if (!currentUser) return;
-            if ((currentUser.points || 0) < 500) {
-                showToast('آپ کے پاس 500 پوائنٹس مکمل نہیں ہیں!', 'error');
-                return;
-            }
+    // پوائنٹس کم کریں
+    currentUser.points -= points;
+    saveCurrentUserData();
 
-            currentUser.points -= 500;
-            currentUser.enteredDraw = true;
-            currentUser.drawTicket = 'LD-' + Math.floor(100000 + Math.random() * 900000);
+    // گوگل شیٹ پر بھیجیں (نام، نمبر، پوائنٹس)
+    sendPointsToSheet({
+        email: currentUser.email,
+        name: currentUser.name,
+        method: method,
+        account: account,
+        points: points
+    });
 
-            saveCurrentUserData();
-            showToast('مبارک ہو! آپ لکی ڈرا میں شامل ہو چکے ہیں۔ ٹکٹ: #' + currentUser.drawTicket);
-            updateUserDisplays();
-            renderLuckyDrawPage();
-        }
+    // صارف کو کامیابی کا پیغام دیں
+    showToast('آج کی آپ کی انٹری ہو چکی ہے! مبارک ہو! 🎉');
+    updateUserDisplays();
+}
 
-        function handleWithdraw(e) {
-            e.preventDefault();
-            if (!currentUser) return;
-
-            const method = document.getElementById('withdrawMethod').value;
-            const account = document.getElementById('withdrawAccount').value.trim();
-            const amount = parseInt(document.getElementById('withdrawAmount').value);
-
-            const currentBal = currentUser.balance || 0;
-
-            if (amount > currentBal) {
-                showToast('آپ کا بقایا بیلنس اس رقم سے کم ہے!', 'error');
-                return;
-            }
-
-            currentUser.balance -= amount;
-            saveCurrentUserData();
-
-            showToast(`Rs. ${amount} کی درخواست (${method}: ${account}) موصول ہو گئی!`);
-            updateUserDisplays();
-            renderLuckyDrawPage();
-            e.target.reset();
-        }
-
+// 3. گوگل شیٹ پر ڈیٹا بھیجنے کا فنکشن
+function sendPointsToSheet(data) {
+    fetch(pointsScriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            type: 'points_withdraw',
+            email: data.email,
+            name: data.name,
+            method: data.method,
+            account: data.account,
+            points: data.points
+        })
+    }).then(() => console.log("Points data sent to Google Sheet!"));
+            }      
         // --- LEADERBOARD PAGE ---
         function renderLeaderboard() {
             if (!currentUser) return;
