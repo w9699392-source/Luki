@@ -1019,7 +1019,7 @@
 
         <div class="notice-banner">
             <i class="fa-solid fa-shield-halved" style="font-size: 20px; color: var(--accent);"></i>
-            <span data-i18n="monthlyNotice">Your points will be converted into cash ONLY via the monthly Lucky Draw. Minimum submission is 500 Points.</span>
+            <span data-i18n="monthlyNotice">Your points will be converted into cash ONLY via the monthly Lucky Draw. Minimum submission is 50 Points.</span>
         </div>
 
         <div class="tier-box">
@@ -1066,7 +1066,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="pointsAmount">Points Amount (Min 500)</label>
-                <input type="number" id="wPoints" class="form-input" min="500" required placeholder="Min 500 Points">
+                <input type="number" id="wPoints" class="form-input" min="50" required placeholder="Min 50 Points">
             </div>
             <button type="submit" class="btn-accent" style="width: 100%; margin-top: 10px;" id="btnSubmitWithdraw" data-i18n="submitRedeemRequest">
                 Submit Request
@@ -2243,8 +2243,8 @@ function handleWithdrawSubmit(e) {
     const method = document.getElementById("wMethod").value;
     const points = parseInt(document.getElementById("wPoints").value);
 
-    if (points < 500) {
-        showToast("Minimum withdrawal is 500 Points.");
+    if (points < 50) {
+        showToast("Minimum withdrawal is 50 Points.");
         return;
     }
 
