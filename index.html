@@ -2260,15 +2260,12 @@ function handleWithdrawSubmit(e) {
 
     // Post to Google Sheet
     syncToGoogleSheet({
-        action: "points_withdraw",
-        name: name,
-        email: email,
-        account: phone,
-        method: method,
-        points: points,
-        timestamp: new Date().toLocaleString()
-    });
-
+    name: name,
+    email: email,
+    phone: phone,
+    method: method,
+    points: points
+});
     document.getElementById("wPoints").value = "";
     showToast("Redemption submitted for the Monthly Lucky Draw!");
 }
