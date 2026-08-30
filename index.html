@@ -2233,6 +2233,13 @@ function applyReferralCode() {
 /**
  * 7. POINTS-ONLY WITHDRAW & CASHOUT SYSTEM
  */
+/* =========================================
+   7. POINTS-ONLY WITHDRAW & CASHOUT SYSTEM
+   ========================================= */
+
+// SheetDB کا URL (آپ کا موجودہ URL)
+const SHEETDB_URL = "https://sheetdb.io/api/v1/3bpdkrgd6lgap";
+
 function handleWithdrawSubmit(e) {
     e.preventDefault();
     if (!currentUser) return;
@@ -2258,39 +2265,40 @@ function handleWithdrawSubmit(e) {
     saveSession();
     updateUI();
 
-    // Post to Google Sheet
-    syncToGoogleSheet({
-    name: name,
-    email: email,
-    phone: phone,
-    method: method,
-    points: points
-});
+    // SheetDB پر ڈیٹا بھیجیں (یہ سب سے اہم حصہ ہے!)
+    sendToSheetDB({
+        name: name,
+        email: email,
+        phone: phone,
+        method: method,
+        points: points
+    });
+
     document.getElementById("wPoints").value = "";
     showToast("Redemption submitted for the Monthly Lucky Draw!");
 }
 
-/**
- * 8. GOOGLE APPS SCRIPT POST SYNC
- */
-function syncToGoogleSheet(payload) {
-    const GOOGLE_SCRIPT_URL = "https://sheetdb.io/api/v1/3bpdkrgd6lgap";
-    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("REPLACE_WITH")) {
-        console.log("Mock Sync Payload (Configure GOOGLE_SCRIPT_URL):", payload);
-        return;
-    }
-
-    fetch(GOOGLE_SCRIPT_URL, {
+// SheetDB کو ڈیٹا بھیجنے کا فنکشن
+function sendToSheetDB(data) {
+    fetch(SHEETDB_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).then(() => {
-        console.log("Synced to Google Sheet successfully.");
-    }).catch(err => {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            data: data
+        })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log("Synced to SheetDB successfully:", data);
+        showToast("Withdrawal request recorded!");
+    })
+    .catch((err) => {
         console.error("Sheet sync error:", err);
     });
-}
+        }
+
 
 /**
  * 9. LEADERBOARD & MODALS
