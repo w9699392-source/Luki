@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PointsHub - Pro Rewards & Games</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-base: #0a0c10;
+      --bg-surface: #12161f;
+      --bg-surface-2: #1a202c;
+      --bg-card: #161b26;
+      --neon: #00ff88;
+      --neon-glow: rgba(0, 255, 136, 0.35);
+      --neon-hover: #00cc6a;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --gold: #fbbf24;
+      --bottom-nav-height: 68px;
+      --top-nav-height: 60px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-top: var(--top-nav-height);
+      padding-bottom: calc(var(--bottom-nav-height) + 16px);
+    }
+
+    body.lang-ur {
+      font-family: 'Noto Nastaliq Urdu', 'Outfit', sans-serif;
+      direction: rtl;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-surface-2); border-radius: 4px; }
+
+    /* Animations */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 12px var(--neon-glow); }
+      50% { box-shadow: 0 0 24px rgba(0, 255, 136, 0.6); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Container */
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Top Bar */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--top-nav-height);
+      background: rgba(18, 22, 31, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 1000;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .top-header .left-actions, .top-header .right-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .icon-btn:active { transform: scale(0.92); }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 18px;
+      background: linear-gradient(135deg, #fff, var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .points-badge {
+      background: rgba(0, 255, 136, 0.12);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--neon);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.15);
+    }
+
+    .lang-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      color: var(--neon);
+    }
+
+    /* Fixed Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--bottom-nav-height);
+      background: rgba(18, 22, 31, 0.98);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 8px;
+    }
+
+    .nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      flex: 1;
+      padding: 8px 0;
+      transition: all 0.2s;
+    }
+
+    .nav-tab i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .nav-tab.active {
+      color: var(--neon);
+    }
+
+    .nav-tab.active i {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 0 6px var(--neon));
+    }
+
+    /* Sidebar Drawer */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-menu {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: -290px;
+      width: 280px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      z-index: 2001;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    body.lang-ur .sidebar-menu {
+      left: auto;
+      right: -290px;
+      border-right: none;
+      border-left: 1px solid var(--border-color);
+    }
+    .sidebar-overlay.active .sidebar-menu {
+      transform: translateX(290px);
+    }
+    body.lang-ur .sidebar-overlay.active .sidebar-menu {
+      transform: translateX(-290px);
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-list {
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: var(--text-main);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-item i {
+      font-size: 18px;
+      width: 22px;
+      text-align: center;
+      color: var(--neon);
+    }
+
+    .sidebar-item:hover, .sidebar-item.active {
+      background: var(--bg-surface-2);
+      color: var(--neon);
+    }
+
+    .sidebar-item.logout-btn {
+      color: var(--danger);
+      margin-top: auto;
+    }
+    .sidebar-item.logout-btn i { color: var(--danger); }
+
+    /* Sections */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Cards & UI Components */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #10241b 0%, #161b26 100%);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, var(--neon-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .btn-neon {
+      background: var(--neon);
+      color: #05080e;
+      box-shadow: 0 0 15px var(--neon-glow);
+    }
+    .btn-neon:active {
+      transform: scale(0.98);
+      background: var(--neon-hover);
+    }
+    .btn-neon:disabled {
+      background: #2d3748;
+      color: #718096;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: var(--bg-surface-2);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Task Grid */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .task-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .task-card:active {
+      transform: scale(0.97);
+    }
+    .task-card.ready {
+      border-color: rgba(0, 255, 136, 0.4);
+    }
+    .task-card.cooldown {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .task-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--bg-surface-2);
+      color: var(--neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.1);
+    }
+
+    .task-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .task-reward {
+      font-size: 11px;
+      color: var(--neon);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .task-timer-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 20px;
+      background: var(--bg-surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      width: 100%;
+    }
+    .task-card.ready .task-timer-badge {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--neon);
+      border-color: rgba(0, 255, 136, 0.3);
+    }
+
+    /* Prize Tiers / Lucky Draw */
+    .prize-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .prize-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .prize-card.grand {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #2b1f09 0%, #161b26 100%);
+      border-color: var(--gold);
+    }
+
+    .prize-icon {
+      font-size: 38px;
+      margin: 8px 0;
+      color: var(--gold);
+    }
+    .prize-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+    .prize-pts { font-size: 12px; color: var(--neon); font-weight: 700; }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    body.lang-ur .form-group { text-align: right; }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 8px var(--neon-glow);
+    }
+
+    /* Modal Popups */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+      position: relative;
+      animation: slideUp 0.3s ease;
+      max-height: 85vh;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--bg-surface-2);
+      border: none;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body.lang-ur .modal-close {
+      right: auto;
+      left: 14px;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      top: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #111827;
+      border: 1px solid var(--neon);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 12px var(--neon-glow);
+      z-index: 4000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 90%;
+      text-align: center;
+    }
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Mini Game Styles */
+    .game-board {
+      margin: 16px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ttt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 70px);
+      gap: 8px;
+    }
+    .ttt-cell {
+      width: 70px;
+      height: 70px;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 28px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--neon);
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 55px);
+      gap: 8px;
+    }
+    .memory-card {
+      width: 55px;
+      height: 55px;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .memory-card.flipped {
+      background: var(--neon);
+      color: #000;
+      transform: rotateY(180deg);
+    }
+    .memory-card.matched {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .scratch-container {
+      position: relative;
+      width: 250px;
+      height: 140px;
+      margin: 10px auto;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px dashed var(--neon);
+    }
+    .scratch-prize {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--neon);
+    }
+    .scratch-canvas {
+      position: absolute;
+      inset: 0;
+      touch-action: none;
+    }
+
+    .wheel-canvas {
+      width: 240px;
+      height: 240px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 4px solid var(--neon);
+      box-shadow: 0 0 15px var(--neon-glow);
+    }
+
+    .star-catcher-box {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: var(--bg-surface-2);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+    .star-target {
+      position: absolute;
+      font-size: 26px;
+      color: var(--gold);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: top 0.3s, left 0.3s;
+    }
+
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: var(--bg-surface-2);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .badge-rank {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      background: rgba(255,255,255,0.1);
+    }
+    .badge-rank.top1 { background: var(--gold); color: #000; }
+    .badge-rank.top2 { background: #94a3b8; color: #000; }
+    .badge-rank.top3 { background: #b45309; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="top-header">
+    <div class="left-actions">
+      <button class="icon-btn" id="btnHamburger" onclick="toggleSidebar(true)">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <span class="brand-title">PointsHub</span>
+    </div>
+    <div class="right-actions">
+      <div class="lang-pill" id="langToggleBtn" onclick="toggleLanguage()">UR / EN</div>
+      <div class="points-badge">
+        <i class="fa-solid fa-bolt"></i>
+        <span id="userPointsDisplay">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay & Menu -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)">
+    <div class="sidebar-menu" onclick="event.stopPropagation()">
+      <div class="sidebar-header">
+        <div class="brand-title">PointsHub Pro</div>
+        <button class="icon-btn" onclick="toggleSidebar(false)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="sidebar-list">
+        <div class="sidebar-item active" onclick="navigateTab('home')">
+          <i class="fa-solid fa-house"></i>
+          <span data-i18n="nav_home">Home</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('tasks')">
+          <i class="fa-solid fa-gamepad"></i>
+          <span data-i18n="nav_tasks">Tasks & Games</span>
+        </div>
+        <div class="sidebar-item" onclick="triggerDailyCheckin()">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span data-i18n="daily_checkin">Daily Check-in</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('draw')">
+          <i class="fa-solid fa-trophy"></i>
+          <span data-i18n="nav_draw">Lucky Draw</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('withdraw')">
+          <i class="fa-solid fa-wallet"></i>
+          <span data-i18n="nav_withdraw">Withdraw</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('referral')">
+          <i class="fa-solid fa-users"></i>
+          <span data-i18n="nav_referral">Refer & Earn</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('leaderboard')">
+          <i class="fa-solid fa-chart-line"></i>
+          <span data-i18n="nav_leaderboard">Leaderboard</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('about')">
+          <i class="fa-solid fa-circle-info"></i>
+          <span data-i18n="nav_about">About Us</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('privacy')">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span data-i18n="nav_privacy">Privacy Policy</span>
+        </div>
+        <div class="sidebar-item" onclick="navigateTab('contact')">
+          <i class="fa-solid fa-headset"></i>
+          <span data-i18n="nav_contact">Contact Support</span>
+        </div>
+        <div class="sidebar-item logout-btn" onclick="handleLogout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span data-i18n="nav_logout">Reset / Logout</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="container">
+
+    <!-- TAB 1: HOME -->
+    <section id="tab-home" class="tab-content active">
+      <!-- Hero Card -->
+      <div class="card hero-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div>
+            <h2 style="font-size: 20px; font-weight:800;" data-i18n="hero_title">Level Up Your Rewards</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;" data-i18n="hero_sub">Play mini-games, earn points daily, win mega prizes!</p>
+          </div>
+          <i class="fa-solid fa-gem" style="font-size: 32px; color: var(--neon);"></i>
+        </div>
+        <div style="margin-top: 16px;">
+          <button class="btn btn-neon" id="homeCheckinBtn" onclick="triggerDailyCheckin()">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span data-i18n="daily_checkin_btn">Claim Daily +5 Pts</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;">
+        <div class="card" style="padding: 12px; text-align: center; margin-bottom: 0;">
+          <i class="fa-solid fa-wallet" style="color: var(--neon); font-size: 18px; margin-bottom: 4px;"></i>
+          <div style="font-size: 16px; font-weight:800;" id="statPoints">0</div>
+          <div style="font-size: 10px; color: var(--text-muted);" data-i18n="stat_points">Total Points</div>
+        </div>
+        <div class="card" style="padding: 12px; text-align: center; margin-bottom: 0;">
+          <i class="fa-solid fa-user-plus" style="color: #60a5fa; font-size: 18px; margin-bottom: 4px;"></i>
+          <div style="font-size: 16px; font-weight:800;" id="statReferrals">0 / 5</div>
+          <div style="font-size: 10px; color: var(--text-muted);" data-i18n="stat_referrals">Referrals</div>
+        </div>
+        <div class="card" style="padding: 12px; text-align: center; margin-bottom: 0;">
+          <i class="fa-solid fa-dice" style="color: var(--gold); font-size: 18px; margin-bottom: 4px;"></i>
+          <div style="font-size: 16px; font-weight:800;">12</div>
+          <div style="font-size: 10px; color: var(--text-muted);" data-i18n="stat_games">Active Games</div>
+        </div>
+      </div>
+
+      <!-- Lucky Draw Banner -->
+      <div class="card" style="border-color: rgba(251, 191, 36, 0.4); background: linear-gradient(135deg, #1c180d, #141720);" onclick="navigateTab('draw')">
+        <div style="display:flex; align-items:center; gap: 14px;">
+          <i class="fa-solid fa-gift" style="font-size: 32px; color: var(--gold);"></i>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size: 15px; color: var(--gold);" data-i18n="draw_banner_title">Monthly Mega Lucky Draw</div>
+            <div style="font-size: 12px; color: var(--text-muted);" data-i18n="draw_banner_sub">Win iPhone 15 Pro, Honda 125 & Watches!</div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i>
+        </div>
+      </div>
+
+      <!-- Featured Games Header -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+        <h3 style="font-size: 16px; font-weight: 700;" data-i18n="featured_games">Popular Mini Games</h3>
+        <span style="font-size: 12px; color: var(--neon); cursor: pointer;" onclick="navigateTab('tasks')" data-i18n="view_all">View All (12)</span>
+      </div>
+
+      <!-- Quick 4 Tasks Preview -->
+      <div class="task-grid" id="homeQuickTasks"></div>
+    </section>
+
+    <!-- TAB 2: TASKS & MINI-GAMES (12 Games) -->
+    <section id="tab-tasks" class="tab-content">
+      <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 18px; font-weight:800;" data-i18n="all_tasks_title">All Mini-Games & Tasks</h2>
+        <p style="font-size: 12px; color: var(--text-muted);" data-i18n="all_tasks_sub">Each task has a 24-hour cooldown. Click to play & earn!</p>
+      </div>
+
+      <div class="task-grid" id="fullTaskGrid"></div>
+    </section>
+
+    <!-- TAB 3: LUCKY DRAW & PRIZE TIERS -->
+    <section id="tab-draw" class="tab-content">
+      <div class="card" style="text-align: center; border-color: rgba(251, 191, 36, 0.4);">
+        <i class="fa-solid fa-crown" style="font-size: 40px; color: var(--gold); margin-bottom: 10px;"></i>
+        <h2 style="font-size: 20px; font-weight:800;" data-i18n="draw_page_title">Lucky Draw & Prize Tiers</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;" data-i18n="draw_page_sub">Participate daily to maximize your winning chance in the upcoming mega lucky draw!</p>
+        
+        <div style="margin-top: 16px;">
+          <button class="btn btn-neon" onclick="participateLuckyDraw()">
+            <i class="fa-solid fa-ticket"></i>
+            <span data-i18n="enter_draw_btn">Enter Today's Draw</span>
+          </button>
+        </div>
+
+        <div id="drawStatusNotice" style="margin-top: 12px; font-size: 12px; color: var(--neon); font-weight: 700; display:none;">
+          <i class="fa-solid fa-circle-check"></i> <span data-i18n="draw_entered_msg">You have participated in today's Lucky Draw!</span>
+        </div>
+      </div>
+
+      <h3 style="font-size: 16px; font-weight:700; margin-bottom: 12px;" data-i18n="prize_tiers_title">Winning Prize Tiers</h3>
+
+      <div class="prize-tier-grid">
+        <div class="prize-card grand">
+          <div style="position:absolute; top:8px; right:8px; background:var(--gold); color:#000; font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px;">GRAND PRIZE</div>
+          <i class="fa-solid fa-motorcycle prize-icon"></i>
+          <div class="prize-title">Honda CG 125 Bike</div>
+          <div class="prize-pts">20,000 Points Tier</div>
+        </div>
+
+        <div class="prize-card">
+          <i class="fa-solid fa-mobile-screen-button prize-icon" style="color: #60a5fa;"></i>
+          <div class="prize-title">iPhone 15 Pro</div>
+          <div class="prize-pts">10,000 Points Tier</div>
+        </div>
+
+        <div class="prize-card">
+          <i class="fa-solid fa-stopwatch prize-icon" style="color: var(--neon);"></i>
+          <div class="prize-title">Smart Watch Pro</div>
+          <div class="prize-pts">5,000 Points Tier</div>
+        </div>
+
+        <div class="prize-card" style="grid-column: span 2;">
+          <i class="fa-solid fa-box-open prize-icon" style="color: #ec4899;"></i>
+          <div class="prize-title">Special Gift Hamper</div>
+          <div class="prize-pts">1,000 Points Tier</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: WITHDRAW (POINTS ONLY + SHEETDB) -->
+    <section id="tab-withdraw" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 4px;" data-i18n="withdraw_title">Redeem Points (SheetDB)</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="withdraw_sub">Minimum redemption threshold is 400 Points. Submitted redemptions qualify for our Monthly Lucky Draw payouts.</p>
+
+        <form id="withdrawForm" onsubmit="handleWithdraw(event)">
+          <div class="form-group">
+            <label class="form-label" data-i18n="field_name">Full Name</label>
+            <input type="text" class="form-input" id="wName" required placeholder="e.g. John Doe">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="field_email">Email Address</label>
+            <input type="email" class="form-input" id="wEmail" required placeholder="name@example.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="field_phone">Phone / Account Number</label>
+            <input type="tel" class="form-input" id="wPhone" required placeholder="03XXXXXXXXX or Account No">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="field_method">Payment / Transfer Method</label>
+            <select class="form-select" id="wMethod" required>
+              <option value="Easypaisa">Easypaisa</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="PayPal">PayPal</option>
+              <option value="USDT/Crypto">USDT (Crypto)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="field_points">Points to Redeem (Min: 400)</label>
+            <input type="number" class="form-input" id="wPoints" min="400" required placeholder="400 or more">
+          </div>
+
+          <button type="submit" class="btn btn-neon" id="btnSubmitWithdraw">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span data-i18n="btn_submit_withdraw">Submit Redemption</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 5: REFERRAL (MAX 5) -->
+    <section id="tab-referral" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 4px;" data-i18n="referral_title">Refer & Earn Points</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;" data-i18n="referral_sub">Earn +50 Points for every friend who joins! Strictly limited to 5 referrals max.</p>
+
+        <!-- Progress -->
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
+            <span data-i18n="referral_limit">Referral Limit:</span>
+            <span id="refProgressText">0 / 5 Completed</span>
+          </div>
+          <div style="width:100%; height:8px; background:var(--bg-surface-2); border-radius:4px; overflow:hidden;">
+            <div id="refProgressBar" style="width:0%; height:100%; background:var(--neon); transition:width 0.3s;"></div>
+          </div>
+        </div>
+
+        <!-- User Ref Link -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="your_ref_code">Your Referral Code</label>
+          <div style="display:flex; gap: 8px;">
+            <input type="text" class="form-input" id="myRefCode" readonly value="POINTS-USER101">
+            <button type="button" class="btn btn-secondary" style="width:auto; padding:0 16px;" onclick="copyReferralLink()">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="btn btn-neon" onclick="shareReferralLink()" style="margin-bottom: 20px;">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span data-i18n="share_btn">Share with Friends</span>
+        </button>
+
+        <hr style="border:none; border-top:1px solid var(--border-color); margin: 18px 0;">
+
+        <!-- Enter Friend's Code -->
+        <h3 style="font-size: 14px; font-weight:700; margin-bottom: 8px;" data-i18n="enter_ref_code_title">Have a Referral Code?</h3>
+        <div class="form-group">
+          <input type="text" class="form-input" id="inputFriendCode" placeholder="Enter friend's code">
+        </div>
+        <button class="btn btn-secondary" id="btnSubmitRef" onclick="handleReferralSubmit()">
+          <i class="fa-solid fa-check"></i>
+          <span data-i18n="claim_ref_btn">Apply & Claim +20 Pts</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 6: LEADERBOARD -->
+    <section id="tab-leaderboard" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 4px;" data-i18n="lb_title">Top Scorers Leaderboard</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="lb_sub">Live rankings of the top points earners this month!</p>
+
+        <div id="leaderboardContainer"></div>
+      </div>
+    </section>
+
+    <!-- TAB 7: ABOUT -->
+    <section id="tab-about" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 8px;" data-i18n="about_title">About PointsHub</h2>
+        <p style="font-size: 13px; line-height: 1.6; color: var(--text-muted); margin-bottom: 12px;" data-i18n="about_p1">
+          PointsHub is a premier gamified reward ecosystem designed to offer entertaining mobile mini-games, daily check-in perks, and real prize opportunities for users worldwide.
+        </p>
+        <p style="font-size: 13px; line-height: 1.6; color: var(--text-muted);" data-i18n="about_p2">
+          Earn points cleanly through skilled mini-games, refer your inner circle, and enter our verified monthly lucky draw pool for high-value rewards like smartphones and motorcycles.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 8: PRIVACY POLICY -->
+    <section id="tab-privacy" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 8px;" data-i18n="privacy_title">Privacy Policy</h2>
+        <p style="font-size: 13px; line-height: 1.6; color: var(--text-muted); margin-bottom: 12px;" data-i18n="privacy_p1">
+          We strictly respect your privacy. PointsHub stores minimal necessary local session details on your device to maintain your game cooldowns and points balance safely.
+        </p>
+        <p style="font-size: 13px; line-height: 1.6; color: var(--text-muted);" data-i18n="privacy_p2">
+          Redemption submissions via SheetDB are encrypted and utilized solely for processing lucky draw allocations. We do not sell or trade user data.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 9: CONTACT US -->
+    <section id="tab-contact" class="tab-content">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight:800; margin-bottom: 8px;" data-i18n="contact_title">Contact & Support</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="contact_sub">Have questions or feedback? Reach out to our dedicated support team 24/7.</p>
+
+        <a href="mailto:support@pointshub.app" class="btn btn-secondary" style="margin-bottom: 12px; text-decoration:none;">
+          <i class="fa-solid fa-envelope" style="color:var(--neon);"></i>
+          <span>support@pointshub.app</span>
+        </a>
+
+        <button class="btn btn-neon" onclick="showToast('Direct chat support will be available shortly!')">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>WhatsApp Live Desk</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Fixed Bottom Navigation Bar -->
+  <nav class="bottom-nav">
+    <div class="nav-tab active" data-tab="home" onclick="navigateTab('home')">
+      <i class="fa-solid fa-house"></i>
+      <span data-i18n="nav_home">Home</span>
+    </div>
+    <div class="nav-tab" data-tab="tasks" onclick="navigateTab('tasks')">
+      <i class="fa-solid fa-gamepad"></i>
+      <span data-i18n="nav_tasks">Tasks</span>
+    </div>
+    <div class="nav-tab" data-tab="draw" onclick="navigateTab('draw')">
+      <i class="fa-solid fa-trophy"></i>
+      <span data-i18n="nav_draw">Draw</span>
+    </div>
+    <div class="nav-tab" data-tab="withdraw" onclick="navigateTab('withdraw')">
+      <i class="fa-solid fa-wallet"></i>
+      <span data-i18n="nav_withdraw">Withdraw</span>
+    </div>
+    <div class="nav-tab" data-tab="referral" onclick="navigateTab('referral')">
+      <i class="fa-solid fa-users"></i>
+      <span data-i18n="nav_referral">Referral</span>
+    </div>
+  </nav>
+
+  <!-- Interactive Game Modal -->
+  <div class="modal-overlay" id="gameModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeGameModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="modalGameTitle" style="font-size: 18px; font-weight:800; margin-bottom: 4px;">Mini Game</h3>
+      <p id="modalGameReward" style="font-size: 12px; color: var(--neon); font-weight:700; margin-bottom: 12px;">+10 Points</p>
+      
+      <!-- Dynamic Game Content Injected Here -->
+      <div id="gamePlayArea"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-msg" id="toastBox">
+    <i class="fa-solid fa-circle-info" style="color:var(--neon);"></i>
+    <span id="toastText">Notification message</span>
+  </div>
+
+  <script>
+    /* =========================================================
+       CONSTANTS & CONFIGURATION
+       ========================================================= */
+    const SMARTLINK_URL = "https://www.effectivecpmnetwork.com/gvf1a7zvp?key=29ff465b3e36791ddb1f8f1c48492c43";
+    const SHEETDB_URL = "https://sheetdb.io/api/v1/3bpdkrgd6lgap";
+    const COOLDOWN_DURATION = 24 * 60 * 60 * 1000; // 24 Hours in ms
+
+    // Translations Dictionary (English / Urdu)
+    const i18n = {
+      en: {
+        nav_home: "Home",
+        nav_tasks: "Tasks & Games",
+        daily_checkin: "Daily Check-in",
+        nav_draw: "Lucky Draw",
+        nav_withdraw: "Withdraw",
+        nav_referral: "Refer & Earn",
+        nav_leaderboard: "Leaderboard",
+        nav_about: "About Us",
+        nav_privacy: "Privacy Policy",
+        nav_contact: "Contact Support",
+        nav_logout: "Reset Account",
+        hero_title: "Level Up Your Rewards",
+        hero_sub: "Play mini-games, earn points daily, win mega prizes!",
+        daily_checkin_btn: "Claim Daily +5 Pts",
+        stat_points: "Total Points",
+        stat_referrals: "Referrals",
+        stat_games: "Active Games",
+        draw_banner_title: "Monthly Mega Lucky Draw",
+        draw_banner_sub: "Win iPhone 15 Pro, Honda 125 & Watches!",
+        featured_games: "Popular Mini Games",
+        view_all: "View All (12)",
+        all_tasks_title: "All Mini-Games & Tasks",
+        all_tasks_sub: "Each task has a 24-hour cooldown. Click to play & earn!",
+        draw_page_title: "Lucky Draw & Prize Tiers",
+        draw_page_sub: "Participate daily to maximize your winning chance in the upcoming mega lucky draw!",
+        enter_draw_btn: "Enter Today's Draw",
+        draw_entered_msg: "You have participated in today's Lucky Draw!",
+        prize_tiers_title: "Winning Prize Tiers",
+        withdraw_title: "Redeem Points (SheetDB)",
+        withdraw_sub: "Minimum redemption threshold is 400 Points. Submitted redemptions qualify for our Monthly Lucky Draw payouts.",
+        field_name: "Full Name",
+        field_email: "Email Address",
+        field_phone: "Phone / Account Number",
+        field_method: "Payment / Transfer Method",
+        field_points: "Points to Redeem (Min: 400)",
+        btn_submit_withdraw: "Submit Redemption",
+        referral_title: "Refer & Earn Points",
+        referral_sub: "Earn +50 Points for every friend who joins! Strictly limited to 5 referrals max.",
+        referral_limit: "Referral Limit:",
+        your_ref_code: "Your Referral Code",
+        share_btn: "Share with Friends",
+        enter_ref_code_title: "Have a Referral Code?",
+        claim_ref_btn: "Apply & Claim +20 Pts",
+        lb_title: "Top Scorers Leaderboard",
+        lb_sub: "Live rankings of the top points earners this month!",
+        about_title: "About PointsHub",
+        about_p1: "PointsHub is a premier gamified reward ecosystem designed to offer entertaining mobile mini-games, daily check-in perks, and real prize opportunities for users worldwide.",
+        about_p2: "Earn points cleanly through skilled mini-games, refer your inner circle, and enter our verified monthly lucky draw pool for high-value rewards like smartphones and motorcycles.",
+        privacy_title: "Privacy Policy",
+        privacy_p1: "We strictly respect your privacy. PointsHub stores minimal necessary local session details on your device to maintain your game cooldowns and points balance safely.",
+        privacy_p2: "Redemption submissions via SheetDB are encrypted and utilized solely for processing lucky draw allocations. We do not sell or trade user data.",
+        contact_title: "Contact & Support",
+        contact_sub: "Have questions or feedback? Reach out to our dedicated support team 24/7."
+      },
+      ur: {
+        nav_home: "ہوم",
+        nav_tasks: "ٹاسکس اور گیمز",
+        daily_checkin: "روزانہ حاضری",
+        nav_draw: "لکی ڈرا",
+        nav_withdraw: "پوائنٹس واپس لیں",
+        nav_referral: "ریفر کریں اور کمائیں",
+        nav_leaderboard: "لیڈر بورڈ",
+        nav_about: "ہمارے بارے میں",
+        nav_privacy: "رازداری کی پالیسی",
+        nav_contact: "مدد اور رابطہ",
+        nav_logout: "ری سیٹ کریں",
+        hero_title: "اپنے انعامات میں اضافہ کریں",
+        hero_sub: "منی گیمز کھیلیں، روزانہ پوائنٹس کمائیں اور میگا انعامات جیتیں!",
+        daily_checkin_btn: "روزانہ +5 پوائنٹس حاصل کریں",
+        stat_points: "کل پوائنٹس",
+        stat_referrals: "ریفرلز",
+        stat_games: "فعال گیمز",
+        draw_banner_title: "ماہانہ میگا لکی ڈرا",
+        draw_banner_sub: "آئی فون 15 پرو، ہونڈا 125 اور اسمارٹ واچز جیتیں!",
+        featured_games: "مشہور منی گیمز",
+        view_all: "تمام دیکھیں (12)",
+        all_tasks_title: "تمام منی گیمز اور ٹاسکس",
+        all_tasks_sub: "ہر ٹاسک کا 24 گھنٹے کا کول ڈاؤن ہے۔ کھیلیں اور کمائیں!",
+        draw_page_title: "لکی ڈرا اور انعامات",
+        draw_page_sub: "ماہانہ میگا لکی ڈرا میں جیتنے کے امکانات بڑھانے کے لیے روزانہ حصہ لیں!",
+        enter_draw_btn: "آج کے ڈرا میں شامل ہوں",
+        draw_entered_msg: "آپ آج کے لکی ڈرا میں کامیابی سے شامل ہو چکے ہیں!",
+        prize_tiers_title: "انعامات کے درجے",
+        withdraw_title: "پوائنٹس ریڈیم کریں (SheetDB)",
+        withdraw_sub: "کم از کم ریڈیمپشن 400 پوائنٹس ہے۔ جمع کرائے گئے پوائنٹس لکی ڈرا کے اہل ہیں۔",
+        field_name: "پورا نام",
+        field_email: "ای میل ایڈریس",
+        field_phone: "فون یا اکاؤنٹ نمبر",
+        field_method: "ادائیگی کا طریقہ",
+        field_points: "ریڈیم پوائنٹس (کم از کم: 400)",
+        btn_submit_withdraw: "درخواست جمع کرائیں",
+        referral_title: "دوستوں کو ریفر کریں",
+        referral_sub: "ہر دوست کے شامل ہونے پر +50 پوائنٹس پائیں۔ زیادہ سے زیادہ 5 ریفرلز!",
+        referral_limit: "ریفرل کی حد:",
+        your_ref_code: "آپ کا ریفرل کوڈ",
+        share_btn: "دوستوں کے ساتھ شیئر کریں",
+        enter_ref_code_title: "کیا آپ کے پاس ریفرل کوڈ ہے؟",
+        claim_ref_btn: "کوڈ لگائیں اور +20 پائیں",
+        lb_title: "سب سے زیادہ پوائنٹس والے کھلاڑی",
+        lb_sub: "اس مہینے کے بہترین پوائنٹس حاصل کرنے والوں کی لائیو درجہ بندی!",
+        about_title: "پوائنٹس ہب کے بارے میں",
+        about_p1: "پوائنٹس ہب ایک بہترین انعامی پلیٹ فارم ہے جو انٹرایکٹو منی گیمز اور حقیقی انعامات فراہم کرتا ہے۔",
+        about_p2: "گیمز کے ذریعے پوائنٹس کمائیں اور اسمارٹ فونز و موٹر سائیکل کے لکی ڈرا میں حصہ لیں۔",
+        privacy_title: "رازداری کی پالیسی",
+        privacy_p1: "ہم آپ کی رازداری کا مکمل احترام کرتے ہیں اور صارف کا ڈیٹا محفوظ رکھتے ہیں۔",
+        privacy_p2: "SheetDB کے ذریعے جمع کی گئی معلومات صرف لکی ڈرا کی شفافیت کے لیے استعمال ہوتی ہیں۔",
+        contact_title: "رابطہ اور مدد",
+        contact_sub: "کسی بھی سوال یا رہنمائی کے لیے ہماری سپورٹ ٹیم سے 24/7 رابطہ کریں۔"
+      }
+    };
+
+    // 12 Task Definitions
+    const TASKS_DATA = [
+      { id: 'math', name: 'Math Quiz', nameUr: 'ریاضی کوئز', icon: 'fa-calculator', pts: 15, type: 'math' },
+      { id: 'ttt', name: 'Tic Tac Toe', nameUr: 'ٹک ٹیک ٹو', icon: 'fa-xmarks-lines', pts: 20, type: 'ttt' },
+      { id: 'speed', name: 'Speed Tap', nameUr: 'اسپیڈ ٹیپ', icon: 'fa-hand-pointer', pts: 10, type: 'speed' },
+      { id: 'survey', name: 'Quick Survey', nameUr: 'فوری سروے', icon: 'fa-list-check', pts: 25, type: 'survey' },
+      { id: 'scratch', name: 'Scratch Card', nameUr: 'اسکریچ کارڈ', icon: 'fa-wand-magic-sparkles', pts: 15, type: 'scratch' },
+      { id: 'spin', name: 'Spin Wheel', nameUr: 'اسپن وہیل', icon: 'fa-dharmachakra', pts: 30, type: 'spin' },
+      { id: 'memory', name: 'Memory Match', nameUr: 'میموری میچ', icon: 'fa-brain', pts: 20, type: 'memory' },
+      { id: 'tf', name: 'True / False', nameUr: 'صحیح / غلط', icon: 'fa-circle-question', pts: 10, type: 'tf' },
+      { id: 'star', name: 'Star Catcher', nameUr: 'اسٹار کیچر', icon: 'fa-star', pts: 15, type: 'star' },
+      { id: 'color', name: 'Color Match', nameUr: 'رنگ میچ', icon: 'fa-palette', pts: 15, type: 'color' },
+      { id: 'word', name: 'Word Scramble', nameUr: 'لفظ بوجھو', icon: 'fa-font', pts: 20, type: 'word' },
+      { id: 'grandquiz', name: 'Grand Quiz', nameUr: 'گرینڈ کوئز', icon: 'fa-award', pts: 35, type: 'grandquiz' }
+    ];
+
+    /* =========================================================
+       STATE MANAGEMENT
+       ========================================================= */
+    let appState = {
+      lang: 'en',
+      points: 0,
+      referralCount: 0,
+      referralCode: 'PH-' + Math.floor(100000 + Math.random() * 900000),
+      hasUsedReferral: false,
+      dailyCheckinTime: 0,
+      luckyDrawParticipated: false,
+      taskCooldowns: {}
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem('POINTSHUB_STATE_PRO');
+      if (saved) {
+        try {
+          appState = { ...appState, ...JSON.parse(saved) };
+        } catch (e) {
+          console.error("State parse error", e);
+        }
+      }
+      renderUI();
+    }
+
+    function saveState() {
+      localStorage.setItem('POINTSHUB_STATE_PRO', JSON.stringify(appState));
+      renderUI();
+    }
+
+    /* =========================================================
+       UI & LOCALIZATION RENDERING
+       ========================================================= */
+    function toggleLanguage() {
+      appState.lang = appState.lang === 'en' ? 'ur' : 'en';
+      document.body.classList.toggle('lang-ur', appState.lang === 'ur');
+      saveState();
+    }
+
+    function renderUI() {
+      // Update Language Classes and Text
+      document.body.classList.toggle('lang-ur', appState.lang === 'ur');
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[appState.lang][key]) {
+          el.innerText = i18n[appState.lang][key];
+        }
+      });
+
+      // Update Points Badge & Stats
+      document.getElementById('userPointsDisplay').innerText = appState.points.toLocaleString();
+      document.getElementById('statPoints').innerText = appState.points.toLocaleString();
+      document.getElementById('statReferrals').innerText = `${appState.referralCount} / 5`;
+      document.getElementById('myRefCode').value = appState.referralCode;
+
+      // Referral Progress
+      const pct = (appState.referralCount / 5) * 100;
+      document.getElementById('refProgressBar').style.width = pct + '%';
+      document.getElementById('refProgressText').innerText = `${appState.referralCount} / 5 Completed`;
+
+      if (appState.referralCount >= 5 || appState.hasUsedReferral) {
+        document.getElementById('btnSubmitRef').disabled = true;
+      }
+
+      // Lucky Draw Status
+      if (appState.luckyDrawParticipated) {
+        document.getElementById('drawStatusNotice').style.display = 'block';
+      }
+
+      // Checkin button check
+      const now = Date.now();
+      const checkinCooldown = appState.dailyCheckinTime && (now - appState.dailyCheckinTime < COOLDOWN_DURATION);
+      const chkBtn = document.getElementById('homeCheckinBtn');
+      if (checkinCooldown) {
+        chkBtn.disabled = true;
+        chkBtn.innerHTML = `<i class="fa-solid fa-clock"></i> <span>Checked-in (24h)</span>`;
+      } else {
+        chkBtn.disabled = false;
+        chkBtn.innerHTML = `<i class="fa-solid fa-calendar-check"></i> <span>${i18n[appState.lang].daily_checkin_btn}</span>`;
+      }
+
+      renderTaskGrids();
+      renderLeaderboard();
+    }
+
+    function renderTaskGrids() {
+      const fullGrid = document.getElementById('fullTaskGrid');
+      const homeGrid = document.getElementById('homeQuickTasks');
+      
+      const now = Date.now();
+
+      const createCardHtml = (task) => {
+        const lastPlay = appState.taskCooldowns[task.id] || 0;
+        const diff = now - lastPlay;
+        const isReady = diff >= COOLDOWN_DURATION;
+        const timeLeft = Math.max(0, COOLDOWN_DURATION - diff);
+
+        let timerText = "Play Now";
+        if (!isReady) {
+          const hrs = Math.floor(timeLeft / (1000 * 60 * 60));
+          const mins = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const secs = Math.floor((timeLeft % (1000 * 60)) / 1000);
+          timerText = `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }
+
+        const taskTitle = appState.lang === 'ur' ? task.nameUr : task.name;
+
+        return `
+          <div class="task-card ${isReady ? 'ready' : 'cooldown'}" onclick="handleTaskClick('${task.id}')">
+            <div class="task-icon-wrap">
+              <i class="fa-solid ${task.icon}"></i>
+            </div>
+            <div class="task-title">${taskTitle}</div>
+            <div class="task-reward">+${task.pts} Points</div>
+            <div class="task-timer-badge" id="timer-${task.id}">${timerText}</div>
+          </div>
+        `;
+      };
+
+      if (fullGrid) {
+        fullGrid.innerHTML = TASKS_DATA.map(createCardHtml).join('');
+      }
+      if (homeGrid) {
+        homeGrid.innerHTML = TASKS_DATA.slice(0, 4).map(createCardHtml).join('');
+      }
+    }
+
+    // Live Cooldown Timer Tick (every 1s)
+    setInterval(() => {
+      const now = Date.now();
+      TASKS_DATA.forEach(task => {
+        const badge = document.getElementById(`timer-${task.id}`);
+        if (!badge) return;
+        const lastPlay = appState.taskCooldowns[task.id] || 0;
+        const diff = now - lastPlay;
+        if (diff >= COOLDOWN_DURATION) {
+          badge.innerText = "Play Now";
+          badge.closest('.task-card')?.classList.remove('cooldown');
+          badge.closest('.task-card')?.classList.add('ready');
+        } else {
+          const timeLeft = COOLDOWN_DURATION - diff;
+          const hrs = Math.floor(timeLeft / (1000 * 60 * 60));
+          const mins = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const secs = Math.floor((timeLeft % (1000 * 60)) / 1000);
+          badge.innerText = `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }
+      });
+    }, 1000);
+
+    /* =========================================================
+       LEADERBOARD MOCK DATA
+       ========================================================= */
+    function renderLeaderboard() {
+      const lb = document.getElementById('leaderboardContainer');
+      if (!lb) return;
+      const leaders = [
+        { rank: 1, name: "Ali Raza", pts: 24500 },
+        { rank: 2, name: "Zaid Khan", pts: 19800 },
+        { rank: 3, name: "Sara Malik", pts: 15400 },
+        { rank: 4, name: "Usman Tariq", pts: 11200 },
+        { rank: 5, name: "Hamza Ahmed", pts: 8900 },
+        { rank: 6, name: "You", pts: appState.points }
+      ];
+
+      lb.innerHTML = leaders.map(l => `
+        <div class="leaderboard-row">
+          <div style="display:flex; align-items:center; gap: 10px;">
+            <div class="badge-rank ${l.rank === 1 ? 'top1' : l.rank === 2 ? 'top2' : l.rank === 3 ? 'top3' : ''}">${l.rank}</div>
+            <span style="font-size: 13px; font-weight: 600;">${l.name}</span>
+          </div>
+          <span style="font-weight: 800; color: var(--neon); font-size: 13px;">${l.pts.toLocaleString()} Pts</span>
+        </div>
+      `).join('');
+    }
+
+    /* =========================================================
+       NAVIGATION & SIDEBAR
+       ========================================================= */
+    function navigateTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+
+      const targetTab = document.getElementById(`tab-${tabName}`);
+      if (targetTab) targetTab.classList.add('active');
+
+      const bottomNavTab = document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+      if (bottomNavTab) bottomNavTab.classList.add('active');
+
+      toggleSidebar(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSidebar(open) {
+      const overlay = document.getElementById('sidebarOverlay');
+      if (open) {
+        overlay.classList.add('active');
+      } else {
+        overlay.classList.remove('active');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      const text = document.getElementById('toastText');
+      text.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    /* =========================================================
+       ADSTERRA SMARTLINK TRIGGER & CORE REWARD LOGIC
+       ========================================================= */
+    function triggerAdsterraAd() {
+      try {
+        window.open(SMARTLINK_URL, '_blank');
+      } catch (e) {
+        console.warn("SmartLink trigger:", e);
+      }
+    }
+
+    function triggerDailyCheckin() {
+      triggerAdsterraAd();
+      const now = Date.now();
+      if (appState.dailyCheckinTime && (now - appState.dailyCheckinTime < COOLDOWN_DURATION)) {
+        showToast("Daily check-in already claimed! Wait for 24h timer.");
+        return;
+      }
+      appState.dailyCheckinTime = now;
+      appState.points += 5;
+      saveState();
+      showToast("Daily Check-in Successful! +5 Points Added.");
+    }
+
+    function participateLuckyDraw() {
+      triggerAdsterraAd();
+      appState.luckyDrawParticipated = true;
+      saveState();
+      showToast("You have participated in today's Lucky Draw!");
+    }
+
+    function handleLogout() {
+      if (confirm("Reset points and session data?")) {
+        localStorage.removeItem('POINTSHUB_STATE_PRO');
+        location.reload();
+      }
+    }
+
+    /* =========================================================
+       REFERRAL LOGIC (STRICT MAX 5)
+       ========================================================= */
+    function copyReferralLink() {
+      const code = appState.referralCode;
+      navigator.clipboard.writeText(code);
+      showToast("Referral Code Copied: " + code);
+    }
+
+    function shareReferralLink() {
+      triggerAdsterraAd();
+      const shareText = `Join PointsHub using my referral code ${appState.referralCode} and win awesome prizes!`;
+      if (navigator.share) {
+        navigator.share({ title: 'PointsHub Rewards', text: shareText, url: window.location.href });
+      } else {
+        copyReferralLink();
+      }
+    }
+
+    function handleReferralSubmit() {
+      const input = document.getElementById('inputFriendCode');
+      const code = input.value.trim();
+
+      if (!code) {
+        showToast("Please enter a referral code.");
+        return;
+      }
+      if (code === appState.referralCode) {
+        showToast("You cannot use your own referral code.");
+        return;
+      }
+      if (appState.referralCount >= 5) {
+        showToast("Maximum referral limit (5) reached!");
+        return;
+      }
+
+      triggerAdsterraAd();
+
+      // Proceed with referral reward
+      appState.referralCount += 1;
+      appState.hasUsedReferral = true;
+      appState.points += 20;
+      saveState();
+      input.value = "";
+      showToast("Referral applied successfully! +20 Points added.");
+    }
+
+    /* =========================================================
+       WITHDRAW / SHEETDB INTEGRATION (POINTS ONLY)
+       ========================================================= */
+    async function handleWithdraw(e) {
+      e.preventDefault();
+      const name = document.getElementById('wName').value.trim();
+      const email = document.getElementById('wEmail').value.trim();
+      const phone = document.getElementById('wPhone').value.trim();
+      const method = document.getElementById('wMethod').value;
+      const points = parseInt(document.getElementById('wPoints').value, 10);
+
+      if (points < 400) {
+        showToast("Minimum withdrawal is 400 Points.");
+        return;
+      }
+      if (points > appState.points) {
+        showToast("Insufficient Points! You have " + appState.points + " pts.");
+        return;
+      }
+
+      triggerAdsterraAd();
+
+      const btn = document.getElementById('btnSubmitWithdraw');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+
+      try {
+        const payload = {
+          data: [{
+            name: name,
+            email: email,
+            phone: phone,
+            method: method,
+            points: points,
+            timestamp: new Date().toISOString()
+          }]
+        };
+
+        const res = await fetch(SHEETDB_URL, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          appState.points -= points;
+          saveState();
+          showToast("Redemption submitted for the Monthly Lucky Draw!");
+          document.getElementById('withdrawForm').reset();
+        } else {
+          showToast("Submission received & recorded locally for Lucky Draw.");
+          appState.points -= points;
+          saveState();
+        }
+      } catch (err) {
+        // Fallback for CORS or offline
+        appState.points -= points;
+        saveState();
+        showToast("Redemption submitted for the Monthly Lucky Draw!");
+        document.getElementById('withdrawForm').reset();
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit Redemption</span>`;
+      }
+    }
+
+    /* =========================================================
+       12 INTERACTIVE MINI GAMES LOGIC
+       ========================================================= */
+    let currentGame = null;
+
+    function handleTaskClick(taskId) {
+      const task = TASKS_DATA.find(t => t.id === taskId);
+      if (!task) return;
+
+      const now = Date.now();
+      const lastPlay = appState.taskCooldowns[taskId] || 0;
+      if (now - lastPlay < COOLDOWN_DURATION) {
+        showToast("This game is on 24h cooldown. Check timer.");
+        return;
+      }
+
+      // Adsterra SmartLink Trigger on every task button click
+      triggerAdsterraAd();
+
+      // Open Modal & Launch Mini Game
+      openGameModal(task);
+    }
+
+    function openGameModal(task) {
+      currentGame = task;
+      document.getElementById('modalGameTitle').innerText = appState.lang === 'ur' ? task.nameUr : task.name;
+      document.getElementById('modalGameReward').innerText = `+${task.pts} Points`;
+      
+      const playArea = document.getElementById('gamePlayArea');
+      playArea.innerHTML = '';
+
+      launchMiniGame(task, playArea);
+
+      document.getElementById('gameModal').classList.add('active');
+    }
+
+    function closeGameModal() {
+      document.getElementById('gameModal').classList.remove('active');
+      currentGame = null;
+    }
+
+    function finishMiniGame(success) {
+      if (!currentGame) return;
+      if (success) {
+        appState.points += currentGame.pts;
+        appState.taskCooldowns[currentGame.id] = Date.now();
+        saveState();
+        showToast(`Congratulations! You won +${currentGame.pts} Points!`);
+      } else {
+        showToast("Game Over! Try again tomorrow.");
+      }
+      setTimeout(() => {
+        closeGameModal();
+      }, 1200);
+    }
+
+    /* MINI GAME ROUTER */
+    function launchMiniGame(task, container) {
+      switch (task.type) {
+        case 'math':
+          initMathGame(container);
+          break;
+        case 'ttt':
+          initTicTacToe(container);
+          break;
+        case 'speed':
+          initSpeedTap(container);
+          break;
+        case 'survey':
+          initSurvey(container);
+          break;
+        case 'scratch':
+          initScratchCard(container);
+          break;
+        case 'spin':
+          initSpinWheel(container);
+          break;
+        case 'memory':
+          initMemoryGame(container);
+          break;
+        case 'tf':
+          initTrueFalse(container);
+          break;
+        case 'star':
+          initStarCatcher(container);
+          break;
+        case 'color':
+          initColorMatch(container);
+          break;
+        case 'word':
+          initWordScramble(container);
+          break;
+        case 'grandquiz':
+          initGrandQuiz(container);
+          break;
+      }
+    }
+
+    // 1. Math Challenge
+    function initMathGame(container) {
+      const n1 = Math.floor(Math.random() * 20) + 5;
+      const n2 = Math.floor(Math.random() * 20) + 5;
+      const ans = n1 + n2;
+      const wrong1 = ans + 2;
+      const wrong2 = ans - 3;
+      const options = [ans, wrong1, wrong2].sort(() => Math.random() - 0.5);
+
+      container.innerHTML = `
+        <div style="font-size: 26px; font-weight:800; margin: 16px 0;">${n1} + ${n2} = ?</div>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+          ${options.map(opt => `<button class="btn btn-secondary" onclick="checkMath(${opt}, ${ans})">${opt}</button>`).join('')}
+        </div>
+      `;
+      window.checkMath = (selected, correct) => {
+        finishMiniGame(selected === correct);
+      };
+    }
+
+    // 2. Tic Tac Toe (AI)
+    function initTicTacToe(container) {
+      let board = ['', '', '', '', '', '', '', '', ''];
+      container.innerHTML = `
+        <div class="ttt-grid" id="tttGrid">
+          ${board.map((_, i) => `<div class="ttt-cell" onclick="handleTTTClick(${i})"></div>`).join('')}
+        </div>
+      `;
+
+      window.handleTTTClick = (index) => {
+        if (board[index] !== '') return;
+        board[index] = 'X';
+        updateTTT();
+        if (checkTTTWinner('X')) { finishMiniGame(true); return; }
+        if (!board.includes('')) { finishMiniGame(true); return; } // tie = win
+
+        // Simple AI move
+        const empties = board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+        if (empties.length > 0) {
+          const aiMove = empties[Math.floor(Math.random() * empties.length)];
+          board[aiMove] = 'O';
+          updateTTT();
+          if (checkTTTWinner('O')) { finishMiniGame(false); return; }
+        }
+      };
+
+      function updateTTT() {
+        const cells = document.querySelectorAll('.ttt-cell');
+        board.forEach((val, idx) => {
+          if (cells[idx]) {
+            cells[idx].innerText = val;
+            if (val === 'O') cells[idx].style.color = '#ef4444';
+          }
+        });
+      }
+
+      function checkTTTWinner(sym) {
+        const wins = [
+          [0,1,2],[3,4,5],[6,7,8],
+          [0,3,6],[1,4,7],[2,5,8],
+          [0,4,8],[2,4,6]
+        ];
+        return wins.some(w => w.every(i => board[i] === sym));
+      }
+    }
+
+    // 3. Speed Tap
+    function initSpeedTap(container) {
+      let taps = 0;
+      const target = 15;
+      container.innerHTML = `
+        <p style="font-size:13px; color:var(--text-muted);">Tap the button 15 times rapidly!</p>
+        <div style="font-size: 32px; font-weight:800; color:var(--neon); margin: 16px 0;" id="tapCounter">0 / ${target}</div>
+        <button class="btn btn-neon" id="tapBtn" onclick="registerSpeedTap()">TAP HERE!</button>
+      `;
+      window.registerSpeedTap = () => {
+        taps++;
+        document.getElementById('tapCounter').innerText = `${taps} / ${target}`;
+        if (taps >= target) {
+          finishMiniGame(true);
+        }
+      };
+    }
+
+    // 4. Quick Survey
+    function initSurvey(container) {
+      container.innerHTML = `
+        <div style="font-size:14px; font-weight:700; margin-bottom:12px;">What is your favorite reward in PointsHub?</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-secondary" onclick="finishMiniGame(true)">🏍️ Honda CG 125</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(true)">📱 iPhone 15 Pro</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(true)">⌚ Smart Watch</button>
+        </div>
+      `;
+    }
+
+    // 5. Scratch Card (Canvas)
+    function initScratchCard(container) {
+      container.innerHTML = `
+        <div class="scratch-container" id="scratchWrap">
+          <div class="scratch-prize">🎉 WINNER! +15 Pts</div>
+          <canvas class="scratch-canvas" id="scratchCanvas" width="250" height="140"></canvas>
+        </div>
+      `;
+      const canvas = document.getElementById('scratchCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#374151';
+      ctx.fillRect(0, 0, 250, 140);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = 'bold 16px Outfit';
+      ctx.fillText('Scratch with Finger!', 45, 75);
+
+      let scratched = 0;
+      const scratch = (x, y) => {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 18, 0, Math.PI * 2);
+        ctx.fill();
+        scratched++;
+        if (scratched > 35) {
+          finishMiniGame(true);
+        }
+      };
+
+      const handleMove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        scratch(clientX - rect.left, clientY - rect.top);
+      };
+
+      canvas.addEventListener('mousemove', handleMove);
+      canvas.addEventListener('touchmove', handleMove);
+    }
+
+    // 6. Spin Wheel
+    function initSpinWheel(container) {
+      container.innerHTML = `
+        <canvas class="wheel-canvas" id="wheelCanvas" width="240" height="240"></canvas>
+        <button class="btn btn-neon" style="margin-top:14px;" id="spinBtn" onclick="spinTheWheel()">SPIN NOW!</button>
+      `;
+      const canvas = document.getElementById('wheelCanvas');
+      const ctx = canvas.getContext('2d');
+      const slices = ['+30 Pts', '+10 Pts', '+50 Pts', '+20 Pts', 'JACKPOT', '+15 Pts'];
+      const colors = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4'];
+
+      function drawWheel(angle) {
+        ctx.clearRect(0,0,240,240);
+        const arc = (Math.PI * 2) / slices.length;
+        slices.forEach((slice, i) => {
+          ctx.beginPath();
+          ctx.fillStyle = colors[i];
+          ctx.moveTo(120, 120);
+          ctx.arc(120, 120, 115, angle + i * arc, angle + (i + 1) * arc);
+          ctx.fill();
+          ctx.save();
+          ctx.translate(120, 120);
+          ctx.rotate(angle + i * arc + arc / 2);
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 12px Outfit';
+          ctx.fillText(slice, 35, 4);
+          ctx.restore();
+        });
+      }
+      drawWheel(0);
+
+      window.spinTheWheel = () => {
+        document.getElementById('spinBtn').disabled = true;
+        let currentAngle = 0;
+        const totalRot = Math.PI * 2 * 5 + Math.random() * Math.PI * 2;
+        let start = null;
+        function anim(ts) {
+          if (!start) start = ts;
+          const prog = (ts - start) / 2500;
+          if (prog < 1) {
+            currentAngle = totalRot * (1 - Math.pow(1 - prog, 3));
+            drawWheel(currentAngle);
+            requestAnimationFrame(anim);
+          } else {
+            drawWheel(totalRot);
+            finishMiniGame(true);
+          }
+        }
+        requestAnimationFrame(anim);
+      };
+    }
+
+    // 7. Memory Flip
+    function initMemoryGame(container) {
+      const symbols = ['💎', '⭐', '🔥', '⚡', '💎', '⭐', '🔥', '⚡'].sort(() => Math.random() - 0.5);
+      container.innerHTML = `
+        <div class="memory-grid">
+          ${symbols.map((s, i) => `<div class="memory-card" data-sym="${s}" data-idx="${i}" onclick="flipMemoryCard(this)">?</div>`).join('')}
+        </div>
+      `;
+      let first = null;
+      let matchedCount = 0;
+
+      window.flipMemoryCard = (card) => {
+        if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+        card.classList.add('flipped');
+        card.innerText = card.getAttribute('data-sym');
+
+        if (!first) {
+          first = card;
+        } else {
+          if (first.getAttribute('data-sym') === card.getAttribute('data-sym')) {
+            first.classList.add('matched');
+            card.classList.add('matched');
+            matchedCount += 2;
+            first = null;
+            if (matchedCount >= 8) {
+              finishMiniGame(true);
+            }
+          } else {
+            setTimeout(() => {
+              first.classList.remove('flipped');
+              first.innerText = '?';
+              card.classList.remove('flipped');
+              card.innerText = '?';
+              first = null;
+            }, 600);
+          }
+        }
+      };
+    }
+
+    // 8. True / False
+    function initTrueFalse(container) {
+      container.innerHTML = `
+        <div style="font-size: 16px; font-weight:700; margin: 16px 0;">Is the capital of Pakistan Islamabad?</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <button class="btn btn-neon" onclick="finishMiniGame(true)">TRUE</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(false)">FALSE</button>
+        </div>
+      `;
+    }
+
+    // 9. Star Catcher
+    function initStarCatcher(container) {
+      let score = 0;
+      container.innerHTML = `
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">Catch 5 jumping stars!</p>
+        <div class="star-catcher-box" id="starBox">
+          <div class="star-target" id="starTarget" onclick="catchStar()">⭐</div>
+        </div>
+      `;
+      const star = document.getElementById('starTarget');
+      function moveStar() {
+        const x = Math.floor(Math.random() * 80) + 10;
+        const y = Math.floor(Math.random() * 80) + 10;
+        star.style.left = x + '%';
+        star.style.top = y + '%';
+      }
+      moveStar();
+
+      window.catchStar = () => {
+        score++;
+        if (score >= 5) {
+          finishMiniGame(true);
+        } else {
+          moveStar();
+        }
+      };
+    }
+
+    // 10. Color Match (Stroop Test)
+    function initColorMatch(container) {
+      const colors = [
+        { name: 'RED', color: '#ef4444' },
+        { name: 'GREEN', color: '#00ff88' },
+        { name: 'BLUE', color: '#3b82f6' }
+      ];
+      const match = Math.random() > 0.5;
+      const textItem = colors[Math.floor(Math.random() * colors.length)];
+      const colorItem = match ? textItem : colors[(colors.indexOf(textItem) + 1) % colors.length];
+
+      container.innerHTML = `
+        <p style="font-size:12px; color:var(--text-muted);">Does the word text match its display color?</p>
+        <div style="font-size: 32px; font-weight:900; color: ${colorItem.color}; margin: 20px 0;">${textItem.name}</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <button class="btn btn-neon" onclick="finishMiniGame(${match})">YES (MATCH)</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(${!match})">NO</button>
+        </div>
+      `;
+    }
+
+    // 11. Word Scramble
+    function initWordScramble(container) {
+      container.innerHTML = `
+        <p style="font-size:12px; color:var(--text-muted);">Unscramble the word:</p>
+        <div style="font-size: 26px; font-weight:800; letter-spacing:4px; color:var(--neon); margin: 14px 0;">W E R D A R</div>
+        <div class="form-group">
+          <input type="text" class="form-input" id="scrambleInput" placeholder="Enter word (REWARD)">
+        </div>
+        <button class="btn btn-neon" onclick="checkWord()">Submit</button>
+      `;
+      window.checkWord = () => {
+        const val = document.getElementById('scrambleInput').value.trim().toUpperCase();
+        finishMiniGame(val === 'REWARD');
+      };
+    }
+
+    // 12. Grand Quiz
+    function initGrandQuiz(container) {
+      container.innerHTML = `
+        <div style="font-size:15px; font-weight:700; margin-bottom:14px;">How many points are required for the minimum withdrawal?</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-secondary" onclick="finishMiniGame(false)">100 Points</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(true)">400 Points</button>
+          <button class="btn btn-secondary" onclick="finishMiniGame(false)">1000 Points</button>
+        </div>
+      `;
+    }
+
+    /* Initialize Application on DOM Ready */
+    document.addEventListener('DOMContentLoaded', () => {
+      loadState();
+    });
+  </script>
+</body>
+</html>
