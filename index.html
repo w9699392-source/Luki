@@ -1649,6 +1649,7 @@
       // Critical: text/plain;charset=utf-8 to prevent CORS preflight issues with Google Apps Script
       fetch(APPS_SCRIPT_URL, {
         method: "POST",
+      mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
