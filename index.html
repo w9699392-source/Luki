@@ -1292,7 +1292,7 @@
 
       <div class="withdraw-card">
         <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;" data-i18n="withdrawNotice">
-          Submit your points for lucky draw payout verification. Minimum threshold is <strong>6,000 Points</strong>. Points only.
+          Submit your points for lucky draw payout verification. Minimum threshold is <strong>10 Points</strong>. Points only.
         </div>
 
         <form id="withdraw-form" onsubmit="handleWithdrawSubmit(event)">
@@ -2492,7 +2492,7 @@
       const currentPoints = (uData && uData.points) || 0;
 
       if (isNaN(points) || points < 6000) {
-        showToast("Minimum withdrawal requirement is 6,000 Points!", "⚠️");
+        showToast("Minimum withdrawal requirement is 10 Points!", "⚠️");
         return;
       }
 
