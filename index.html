@@ -1243,7 +1243,7 @@
           <div class="tier-info">
             <div class="tier-name" data-i18n="tier1Name">Small Prize</div>
             <div class="tier-prize">Rs. 5,000 Cash</div>
-            <div class="tier-req">Requirement: 6,000 Points</div>
+            <div class="tier-req">Requirement: 10 Points</div>
           </div>
         </div>
 
@@ -1323,7 +1323,7 @@
 
           <div class="form-group">
             <label class="form-label" data-i18n="labelPoints">Points to Redeem (Minimum 10 Points)</label>
-            <input type="number" id="wd-points" class="form-control" min="6000" step="1" required placeholder="Enter points (min 10)" />
+            <input type="number" id="wd-points" class="form-control" min="10" step="1" required placeholder="Enter points (min 10)" />
           </div>
 
           <button type="submit" id="wd-submit-btn" class="btn-neon" style="width: 100%; padding: 14px;">
@@ -2491,7 +2491,7 @@
       const uData = getUserData();
       const currentPoints = (uData && uData.points) || 0;
 
-      if (isNaN(points) || points < 6000) {
+      if (isNaN(points) || points < 10) {
         showToast("Minimum withdrawal requirement is 10 Points!", "⚠️");
         return;
       }
